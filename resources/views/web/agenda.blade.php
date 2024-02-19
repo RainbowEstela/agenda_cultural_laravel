@@ -1,3 +1,3 @@
 <x-app-web>
-    welcome
+    agenda
 </x-app-web>

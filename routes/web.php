@@ -21,17 +21,17 @@ Route::get('/', function () {
 Route::prefix("web")->group(function () {
     // vista pagina estatica
     Route::get('/explora', function () {
-        return view('welcome');
+        return view('web.explora');
     })->name("explora");
 
     // vista de experiencias
     Route::get('/experiencias', function () {
-        return view('welcome');
+        return view('web.experiencias');
     })->name("experiencias");
 
     // vista de eventos
     Route::get('/eventos', function () {
-        return view('welcome');
+        return view('web.agenda');
     })->name("eventos");
 
     // vista de detalle de evento

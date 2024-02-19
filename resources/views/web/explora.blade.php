@@ -1,3 +1,3 @@
 <x-app-web>
-    welcome
+    explorar
 </x-app-web>

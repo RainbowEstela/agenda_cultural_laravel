@@ -1,3 +1,3 @@
 <x-app-web>
-    welcome
+    experiencias
 </x-app-web>
