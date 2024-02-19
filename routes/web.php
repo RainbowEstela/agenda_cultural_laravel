@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// pagina inicio web
 Route::get('/', function () {
     return view('welcome');
 })->name('home');

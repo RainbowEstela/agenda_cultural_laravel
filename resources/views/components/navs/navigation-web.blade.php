@@ -1,6 +1,6 @@
 <header class="text-gray-600 body-font bg-blue-100">
     <div class=" container mx-auto flex p-5 flex-row items-center">
-        <a class="flex title-font font-medium items-center text-gray-900 mb-0">
+        <a href="{{route('home')}}" class="flex title-font font-medium items-center text-gray-900 mb-0">
             <img src="{{ asset('storage/web/agenda-icon.png') }}" alt="" class="w-10 h-10">
             <span class="ml-3 text-xl">A.C. Estela</span>
         </a>
