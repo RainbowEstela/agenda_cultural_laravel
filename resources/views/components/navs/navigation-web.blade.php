@@ -9,10 +9,18 @@
 
         <div class="justify-between items-center grow hidden md:flex">
             <nav class="md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l md:border-gray-400	flex flex-wrap items-center text-base justify-center">
-                <a class="mr-5 border-b-2 border-blue-600 text-blue-600 hover:text-gray-900">Inicio</a>
-                <a class="mr-5 hover:text-gray-900">Agenda</a>
-                <a class="mr-5 hover:text-gray-900">Explora</a>
-                <a class="mr-5 hover:text-gray-900">Experiencias</a>
+                <x-navs.link :href="route('home')" :active="request()->routeIs('home')">
+                    {{ __('Inicio') }}
+                </x-navs.link>
+                <x-navs.link :href="route('eventos')" :active="request()->routeIs('eventos')">
+                    {{ __('Agenda') }}
+                </x-navs.link>
+                <x-navs.link :href="route('explora')" :active="request()->routeIs('explora')">
+                    {{ __('Explora') }}
+                </x-navs.link>
+                <x-navs.link :href="route('experiencias')" :active="request()->routeIs('experiencias')">
+                    {{ __('Experiencias') }}
+                </x-navs.link>
             </nav>
             @auth
             <div class="flex gap-2">
@@ -46,8 +54,8 @@
                 </x-dropdown>
             </div>
             @else
-            <button type="button" class="inline-flex items-center text-base font-medium hover:text-white border-2 border-gray-600 hover:bg-gray-600 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg py-1 px-3 text-center me-2">login</button>
-            <button type="button" class="inline-flex items-center text-base font-medium hover:text-white border-2 border-gray-600 hover:bg-gray-600 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg py-1 px-3 text-center me-2">register</button>
+            <a href="{{ route('login') }}"><button type="button" class="inline-flex items-center text-base font-medium hover:text-white border-2 border-gray-600 hover:bg-gray-600 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg py-1 px-3 text-center me-2">login</button></a>
+            <a href="{{ route('register') }}"><button type="button" class="inline-flex items-center text-base font-medium hover:text-white border-2 border-gray-600 hover:bg-gray-600 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg py-1 px-3 text-center me-2">register</button></a>
             @endauth
 
         </div>
@@ -85,8 +93,8 @@
                 </x-dropdown>
             </div>
             @else
-            <button type="button" class="inline-flex items-center text-base font-medium hover:text-white border-2 border-gray-600 hover:bg-gray-600 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg py-1 px-3 text-center me-2">login</button>
-            <button type="button" class="inline-flex items-center text-base font-medium hover:text-white border-2 border-gray-600 hover:bg-gray-600 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg py-1 px-3 text-center me-2">register</button>
+            <a href="{{ route('login') }}"><button type="button" class="inline-flex items-center text-base font-medium hover:text-white border-2 border-gray-600 hover:bg-gray-600 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg py-1 px-3 text-center me-2">login</button></a>
+            <a href="{{ route('register') }}"><button type="button" class="inline-flex items-center text-base font-medium hover:text-white border-2 border-gray-600 hover:bg-gray-600 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg py-1 px-3 text-center me-2">register</button></a>
             @endauth
 
 
@@ -101,16 +109,16 @@
                 </x-slot>
 
                 <x-slot name="content">
-                    <x-dropdown-link :href="route('profile.edit')">
+                    <x-dropdown-link :href="route('home')">
                         Inicio
                     </x-dropdown-link>
-                    <x-dropdown-link :href="route('profile.edit')">
+                    <x-dropdown-link :href="route('eventos')">
                         Agenda
                     </x-dropdown-link>
-                    <x-dropdown-link :href="route('profile.edit')">
+                    <x-dropdown-link :href="route('explora')">
                         Explora
                     </x-dropdown-link>
-                    <x-dropdown-link :href="route('profile.edit')">
+                    <x-dropdown-link :href="route('experiencias')">
                         Experiencias
                     </x-dropdown-link>
                 </x-slot>

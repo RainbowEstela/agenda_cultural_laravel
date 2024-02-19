@@ -16,6 +16,28 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+})->name('home');
+
+Route::prefix("web")->group(function () {
+    // vista pagina estatica
+    Route::get('/explora', function () {
+        return view('welcome');
+    })->name("explora");
+
+    // vista de experiencias
+    Route::get('/experiencias', function () {
+        return view('welcome');
+    })->name("experiencias");
+
+    // vista de eventos
+    Route::get('/eventos', function () {
+        return view('welcome');
+    })->name("eventos");
+
+    // vista de detalle de evento
+    Route::get('/eventos/{id}', function () {
+        return view('welcome');
+    })->name("eventos.detalle");
 });
 
 Route::get('/dashboard', function () {
@@ -28,4 +50,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
