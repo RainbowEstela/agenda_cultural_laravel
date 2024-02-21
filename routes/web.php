@@ -25,10 +25,17 @@ Route::prefix("web")->group(function () {
         return view('web.explora');
     })->name("explora");
 
+
     // vista de experiencias
     Route::get('/experiencias', function () {
         return view('web.experiencias');
     })->name("experiencias");
+
+    // vista de experiencias detalle
+    Route::get('/experiencias/{id}', function () {
+        return view('web.experiencias');
+    })->name("experiencias.detalle");
+
 
     // vista de eventos
     Route::get('/eventos', function () {
@@ -40,6 +47,8 @@ Route::prefix("web")->group(function () {
         return view('welcome');
     })->name("eventos.detalle");
 });
+
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
