@@ -3,7 +3,7 @@
         <form action="">
             @csrf
             <div class="grid grid-cols-1 w-max gap-5 my-8 mx-auto">
-                <select name="categoria" id="categoria" class="bg-gray-50 border-2 border-blue-700 text-blue-700 font-medium rounded-lg focus:ring-blue-900 focus:border-blue-900 block w-full p-2.5">
+                <select name="categoria" id="categoria" class="bg-gray-50 border-2 border-blue-600 text-blue-700 font-medium rounded-lg focus:ring-blue-900 focus:border-blue-900 block w-full p-2.5">
                     <option value="" selected>Categoría</option>
                     <option value="cine">Cine</option>
                     <option value="musica">Música</option>
