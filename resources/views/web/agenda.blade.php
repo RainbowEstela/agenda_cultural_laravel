@@ -47,20 +47,30 @@
                     Reunión anual en el bar de Paco, Vino de la comarca a 50%.
                 </x-slot>
 
-                <x-slot name="categoria">
+
+                <x-text.p-card>
+                    <x-slot name="dato">
+                        Categoría
+                    </x-slot>
                     Comida
-                </x-slot>
+                </x-text.p-card>
 
-                <x-slot name="aforo">
+                <x-text.p-card>
+                    <x-slot name="dato">
+                        Aforo
+                    </x-slot>
                     40
-                </x-slot>
+                </x-text.p-card>
 
-                <x-slot name="asistencia">
+                <x-text.p-card>
+                    <x-slot name="dato">
+                        Tipo
+                    </x-slot>
                     online
-                </x-slot>
+                </x-text.p-card>
 
-                <x-slot name="id">
-                    1
+                <x-slot name="ruta">
+                    {{route('eventos.detalle',['id' => 1])}}
                 </x-slot>
             </x-div.card-evento>
             @endforeach

@@ -44,7 +44,7 @@ Route::prefix("web")->group(function () {
 
     // vista de detalle de evento
     Route::get('/eventos/{id}', function () {
-        return view('welcome');
+        return view('web.detalle-evento');
     })->name("eventos.detalle");
 });
 

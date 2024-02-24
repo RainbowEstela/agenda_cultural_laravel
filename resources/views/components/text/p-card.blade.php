@@ -1,0 +1,1 @@
+<p class="leading-relaxed text-base font-semibold">{{$dato}}: <span class="text-blue-500 font-normal">{{$slot}}</span></p>
