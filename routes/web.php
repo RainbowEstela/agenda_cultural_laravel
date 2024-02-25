@@ -33,7 +33,7 @@ Route::prefix("web")->group(function () {
 
     // vista de experiencias detalle
     Route::get('/experiencias/{id}', function () {
-        return view('web.experiencias');
+        return view('web.detalle-experiencia');
     })->name("experiencias.detalle");
 
 

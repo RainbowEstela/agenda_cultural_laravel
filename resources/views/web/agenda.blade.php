@@ -2,8 +2,11 @@
     <x-div.principal>
         <form action="">
             @csrf
-            <div class="grid grid-cols-1 w-max gap-5 my-8 mx-auto">
-                <select name="categoria" id="categoria" class="bg-gray-50 border-2 border-blue-600 text-blue-700 font-medium rounded-lg focus:ring-blue-900 focus:border-blue-900 block w-full p-2.5">
+            <x-div.grid-uno>
+                <x-input.select-blue>
+                    <x-slot name="nombre">categoria</x-slot>
+                    <x-slot name="id">categoria</x-slot>
+
                     <option value="" selected>Categoría</option>
                     <option value="cine">Cine</option>
                     <option value="musica">Música</option>
@@ -12,14 +15,25 @@
                     <option value="festival">Festival</option>
                     <option value="gaming">Gaming</option>
                     <option value="gastronomia">Gastronomía</option>
-                </select>
+                </x-input.select-blue>
                 <div class="w-fit">
-                    <button type="submit" name="fecha" value="mes" class="inline-flex items-center text-blue-700 font-medium hover:text-white border-2 border-blue-600 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg py-1 px-3 text-center me-2">Este mes</button>
-                    <button type="submit" name="fecha" value="semana" class="inline-flex items-center text-blue-700 font-medium hover:text-white border-2 border-blue-600 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg py-1 px-3 text-center me-2">Esta semana</button>
-                    <button type="submit" name="fecha" value="todos" class="inline-flex items-center text-blue-700 font-medium hover:text-white border-2 border-blue-600 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg py-1 px-3 text-center">Todos</button>
+                    <x-button.blue-submit>
+                        <x-slot name="name">fecha</x-slot>
+                        <x-slot name="value">mes</x-slot>
+                        Este mes
+                    </x-button.blue-submit>
+                    <x-button.blue-submit>
+                        <x-slot name="name">fecha</x-slot>
+                        <x-slot name="value">semana</x-slot>
+                        Esta semana
+                    </x-button.blue-submit>
+                    <x-button.blue-submit>
+                        <x-slot name="name">fecha</x-slot>
+                        <x-slot name="value">todos</x-slot>
+                        Todos
+                    </x-button.blue-submit>
                 </div>
-
-            </div>
+            </x-div.grid-uno>
         </form>
         <x-text.title>Agenda de eventos</x-text.title>
 

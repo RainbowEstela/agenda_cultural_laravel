@@ -1,3 +1,3 @@
-<div class="my-4 md:my-8 px-4">
+<div class="px-4 py-4">
     {{$slot}}
 </div>

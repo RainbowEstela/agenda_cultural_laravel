@@ -17,9 +17,9 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body>
+<body class="bg-blue-100">
     @include('components.navs.navigation-web')
-    <main>
+    <main class="bg-gray-50">
         {{$slot}}
     </main>
     @include('components.footers.footer-web')

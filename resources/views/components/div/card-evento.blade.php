@@ -5,6 +5,6 @@
     <p class="leading-relaxed text-base">{{$descripcion}}</p>
     {{$slot}}
     <div class="mt-4 flex justify-center">
-        <a href="{{$ruta}}"><button type="button" class="inline-flex items-center text-blue-700 font-medium hover:text-white border-2 border-blue-600 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg py-1 px-3 text-center me-2">Detalles</button></a>
+        <a href="{{$ruta}}"><x-button.blue>Detalles</x-button.blue></a>
     </div>
 </div>
