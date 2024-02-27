@@ -1,69 +1,51 @@
-<!DOCTYPE html>
-<html :class="{ 'theme-dark': dark }" x-data="data()" lang="en">
+<x-layout-admin>
+    <x-table.skeleton>
+        <x-slot name="titulo">
+            Eventos
+        </x-slot>
+        <x-slot name="head">
+            <x-table.th>Nombre</x-table.th>
+            <x-table.th>Fecha</x-table.th>
+            <x-table.th>Hora</x-table.th>
+            <x-table.th>Descripción</x-table.th>
+            <x-table.th>Ciudad</x-table.th>
+            <x-table.th>Direccion</x-table.th>
+            <x-table.th>Estado</x-table.th>
+            <x-table.th>Aforo</x-table.th>
+            <x-table.th>Tipo</x-table.th>
+            <x-table.th>Entradas por persona</x-table.th>
+            <x-table.th>Categoría</x-table.th>
+            <x-table.th>Imagen</x-table.th>
+            <x-table.th>Creador</x-table.th>
+            <x-table.th>Acciones</x-table.th>
+        </x-slot>
 
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>A.C. Estela | Admin</title>
-
-    <!-- Scripts -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-</head>
-
-<body>
-    <div class="flex h-screen bg-gray-50 dark:bg-gray-900" :class="{ 'overflow-hidden': isSideMenuOpen }">
-        <!-- Desktop sidebar -->
-        <aside class="z-20 hidden w-64 overflow-y-auto bg-white dark:bg-gray-800 md:block flex-shrink-0">
-            <div class="py-4 text-gray-500 dark:text-gray-400">
-                <a class="ml-6 text-lg font-bold text-gray-800 dark:text-gray-200" href="#">
-                    Windmill
-                </a>
-                <ul class="mt-6">
-                    <x-navs.dropdown-link-admin :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        <x-slot name="svg">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4H1m3 4H1m3 4H1m3 4H1m6.071.286a3.429 3.429 0 1 1 6.858 0M4 1h12a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1Zm9 6.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Z" />
-                        </x-slot>
-                        {{ __('Eventos') }}
-                    </x-navs.dropdown-link-admin>
-                </ul>
-                <ul>
-                    <x-navs.dropdown-link-admin :active="request()->routeIs('/')">
-                        <x-slot name="svg">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.9 15.1 15 9m-5-.6h0m3.1 7.2h0M14 4a2.8 2.8 0 0 0 2.3.9 2.8 2.8 0 0 1 2.9 3 2.8 2.8 0 0 0 .9 2.1 2.8 2.8 0 0 1 0 4.2 2.8 2.8 0 0 0-.9 2.2 2.8 2.8 0 0 1-3 2.9 2.8 2.8 0 0 0-2.1.9 2.8 2.8 0 0 1-4.2 0 2.8 2.8 0 0 0-2.2-.9 2.8 2.8 0 0 1-2.9-3 2.8 2.8 0 0 0-.9-2.1 2.8 2.8 0 0 1 0-4.2 2.8 2.8 0 0 0 .9-2.2 2.8 2.8 0 0 1 3-2.9A2.8 2.8 0 0 0 9.9 4a2.8 2.8 0 0 1 4.2 0Z" />
-                        </x-slot>
-                        {{ __('Experiencias') }}
-                    </x-navs.dropdown-link-admin>
-
-                    <x-navs.dropdown-link-admin :active="request()->routeIs('/')">
-                        <x-slot name="svg">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 12c.3 0 .5 0 .8-.2.2 0 .4-.3.6-.5l.4-.7.2-.9c0 .6.2 1.2.6 1.6.4.4.9.7 1.4.7.5 0 1-.3 1.4-.7.4-.4.6-1 .6-1.6 0 .6.2 1.2.6 1.6.4.4.9.7 1.4.7.5 0 1-.3 1.4-.7.4-.4.6-1 .6-1.6a2.5 2.5 0 0 0 .6 1.6l.6.5a1.8 1.8 0 0 0 1.6 0l.6-.5.4-.7.2-.9c0-1-1.1-3.8-1.6-5a1 1 0 0 0-1-.7h-11a1 1 0 0 0-.9.6A29 29 0 0 0 4 9.7c0 .6.2 1.2.6 1.6.4.4.9.7 1.4.7Zm0 0c.3 0 .7 0 1-.3l.7-.7h.6c.2.3.5.6.8.7a1.8 1.8 0 0 0 1.8 0c.3-.1.6-.4.8-.7h.6c.2.3.5.6.8.7a1.8 1.8 0 0 0 1.8 0c.3-.1.6-.4.8-.7h.6c.2.3.5.6.8.7.2.2.6.3.9.3.4 0 .7-.1 1-.4M6 12a2 2 0 0 1-1.2-.5m.2.5v7c0 .6.4 1 1 1h2v-5h3v5h7c.6 0 1-.4 1-1v-7m-5 3v2h2v-2h-2Z" />
-                        </x-slot>
-                        {{ __('Empresas') }}
-                    </x-navs.dropdown-link-admin>
-                    <x-navs.dropdown-link-admin :active="request()->routeIs('/')">
-                        <x-slot name="svg">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.6 8.4h0m-4.7 11.3-6.6-6.6a1 1 0 0 1 0-1.4l7.3-7.4a1 1 0 0 1 .7-.3H18a2 2 0 0 1 2 2v5.5a1 1 0 0 1-.3.7l-7.5 7.5a1 1 0 0 1-1.3 0Z" />
-                        </x-slot>
-                        {{ __('Categorías') }}
-                    </x-navs.dropdown-link-admin>
-
-                    <x-navs.dropdown-link-admin :active="request()->routeIs('/')">
-                        <x-slot name="svg">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 9h3m-3 3h3m-3 3h3m-6 1c-.3-.6-1-1-1.6-1H7.6c-.7 0-1.3.4-1.6 1M4 5h16c.6 0 1 .4 1 1v12c0 .6-.4 1-1 1H4a1 1 0 0 1-1-1V6c0-.6.4-1 1-1Zm7 5a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z" />
-                        </x-slot>
-                        {{ __('Usuarios') }}
-                    </x-navs.dropdown-link-admin>
-                </ul>
+        <x-table.td>Fiesta del vino</x-table.td>
+        <x-table.td>23-06-2023</x-table.td>
+        <x-table.td>17:00</x-table.td>
+        <x-table.td>Ah beber vino al bar de pepe con un 50% para celebrar que acabamos el año</x-table.td>
+        <x-table.td>Vera</x-table.td>
+        <x-table.td>Mi casa</x-table.td>
+        <x-table.td><x-text.positive>Creado</x-text.positive></x-table.td>
+        <x-table.td>300</x-table.td>
+        <x-table.td>Presencial</x-table.td>
+        <x-table.td>4</x-table.td>
+        <x-table.td>Comida</x-table.td>
+        <x-table.td><a href="">Ver</a></x-table.td>
+        <x-table.td>una fulana</x-table.td>
+        <x-table.td>
+            <div class="flex items-center space-x-4 text-sm">
+                <button class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray" aria-label="Edit">
+                    <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"></path>
+                    </svg>
+                </button>
+                <button class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray" aria-label="Delete">
+                    <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                    </svg>
+                </button>
             </div>
-        </aside>
-        <div class="flex flex-col flex-1 w-full">
-            @include('components.navs.navigation-admin')
-            <main class="h-full overflow-y-auto">
-
-            </main>
-        </div>
-    </div>
-</body>
-
-</html>
+        </x-table.td>
+    </x-table.skeleton>
+</x-layout-admin>

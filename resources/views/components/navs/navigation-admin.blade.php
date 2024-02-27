@@ -14,8 +14,8 @@
                 <x-slot name="content">
                     <aside>
                         <div class="py-4 text-gray-500 dark:text-gray-400">
-                            <a class="ml-6 text-lg font-bold text-gray-800 dark:text-gray-200" href="#">
-                                Windmill
+                            <a class="ml-6 text-lg font-bold text-gray-800 dark:text-gray-200" href="{{route('dashboard')}}">
+                                A.C Estela - Admin
                             </a>
                             <ul class="mt-6">
                                 <x-navs.dropdown-link-admin :href="route('dashboard')" :active="request()->routeIs('dashboard')">
@@ -100,7 +100,7 @@
                                 </svg>
                             </div>
 
-                            <img class="object-cover w-8 h-8 rounded-full ms-1" src="https://images.unsplash.com/photo-1502378735452-bc7d86632805?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&s=aa3a807e1bbdfd4364d1f449eaa96d82" alt="" aria-hidden="true" />
+                            <img class="object-cover w-8 h-8 rounded-full ms-1" src="{{asset('storage/admin/user.png')}}" alt="imagen de usuario" aria-hidden="true" />
 
                         </button>
                     </x-slot>
