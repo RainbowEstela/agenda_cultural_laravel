@@ -99,7 +99,7 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
     // Rutas de experiencias
     Route::prefix('experiencias')->group(function () {
         Route::get('/view', function () { // TO DO
-            return view('dashboard');
+            return view('components.admin.experiencia-view');
         })->name('experiencia.view');
 
         Route::get('/create', function () { // TO DO
@@ -125,7 +125,7 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
     // Rutas de usuarios
     Route::prefix('usuarios')->group(function () {
         Route::get('/view', function () { // TO DO
-            return view('dashboard');
+            return view('components.admin.usuario-view');
         })->name('usuario.view');
 
         Route::get('/delete/{id}', function () { // TO DO
@@ -136,11 +136,11 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
     // Rutas de categorias
     Route::prefix('categorias')->group(function () {
         Route::get('/view', function () { // TO DO
-            return view('dashboard');
+            return view('components.admin.categoria-view');
         })->name('categoria.view');
 
         Route::get('/create', function () { // TO DO
-            return view('dashboard');
+            return view('components.admin.categoria-form-crear');
         })->name('categoria.crear');
 
         Route::post('/store', function () { // TO DO
@@ -155,11 +155,11 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
     // Rutas de empresa
     Route::prefix('empresas')->group(function () {
         Route::get('/view', function () { // TO DO
-            return view('dashboard');
+            return view('components.admin.empresa-view');
         })->name('empresa.view');
 
         Route::get('/create', function () { // TO DO
-            return view('dashboard');
+            return view('components.admin.empresa-form-crear');
         })->name('empresa.crear');
 
         Route::post('/store', function () { // TO DO

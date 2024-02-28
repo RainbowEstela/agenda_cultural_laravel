@@ -4,7 +4,7 @@
             Eventos
         </x-slot>
         <x-slot name="buttons">
-            <a href="">
+            <a href="{{route('evento.crear')}}">
                 <x-button.purple>
                     Añadir
                 </x-button.purple>
@@ -33,7 +33,9 @@
                 <p>23-06-2023</p>
                 <p>17:00</p>
             </x-table.td>
-            <x-table.td>Ah beber vino al bar de pepe con un 50% para celebrar que acabamos el año</x-table.td>
+            <x-table.td>
+                <p class="max-h-28 overflow-y-scroll">Ah beber vino al bar de pepe con un 50% para celebrar que acabamos el año</p>
+            </x-table.td>
             <x-table.td>Vera</x-table.td>
             <x-table.td>Mi casa</x-table.td>
             <x-table.td><x-text.positive>Creado</x-text.positive></x-table.td>

@@ -4,9 +4,11 @@
             Añadir evento
         </h2>
 
-        <form action="" method="post">
+        <!-- EL USUARIO Y EL ESTADO SE HACEN EN EL CONTROLADOR USUARIO AUTH Y ESTADO ACTIVO POR DEFECTO -->
+        <form action="" method="get" enctype="multipart/form-data">
             @csrf
             <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
+                <!-- Nombre -->
                 <x-input.admin-text>
                     <x-slot name="dato">
                         Nombre
@@ -19,6 +21,7 @@
                     </x-slot>
                 </x-input.admin-text>
 
+                <!-- Fecha -->
                 <x-div.margin-top>
                     <x-input.admin-date>
                         <x-slot name="dato">
@@ -33,6 +36,7 @@
                     </x-input.admin-date>
                 </x-div.margin-top>
 
+                <!-- Hora -->
                 <x-div.margin-top>
                     <x-input.admin-hora>
                         <x-slot name="dato">
@@ -47,62 +51,150 @@
                     </x-input.admin-hora>
                 </x-div.margin-top>
 
-                <div class="mt-4 text-sm">
-                    <span class="text-gray-700 dark:text-gray-400">
-                        Account Type
-                    </span>
-                    <div class="mt-2">
-                        <label class="inline-flex items-center text-gray-600 dark:text-gray-400">
-                            <input type="radio" class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" name="accountType" value="personal" />
-                            <span class="ml-2">Personal</span>
-                        </label>
-                        <label class="inline-flex items-center ml-6 text-gray-600 dark:text-gray-400">
-                            <input type="radio" class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" name="accountType" value="busines" />
-                            <span class="ml-2">Business</span>
-                        </label>
-                    </div>
-                </div>
+                <!-- Descripción -->
+                <x-input.admin-textarea>
+                    <x-slot name="dato">
+                        Descripción
+                    </x-slot>
+                    <x-slot name="name">
+                        descripcion
+                    </x-slot>
+                    <x-slot name="placeholder">
+                        Apuntate al evento musical de este verano, con las bandas más conocidas en el mundo de la música.
+                    </x-slot>
+                </x-input.admin-textarea>
 
-                <label class="block mt-4 text-sm">
-                    <span class="text-gray-700 dark:text-gray-400">
-                        Requested Limit
-                    </span>
-                    <select class="block w-full p-2 rounded-md mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
-                        <option>$1,000</option>
-                        <option>$5,000</option>
-                        <option>$10,000</option>
-                        <option>$25,000</option>
-                    </select>
-                </label>
+                <!-- Ciudad -->
+                <x-div.margin-top>
+                    <x-input.admin-text>
+                        <x-slot name="dato">
+                            Ciudad
+                        </x-slot>
+                        <x-slot name="name">
+                            ciudad
+                        </x-slot>
+                        <x-slot name="placeholder">
+                            Málaga
+                        </x-slot>
+                    </x-input.admin-text>
+                </x-div.margin-top>
 
-                <label class="block mt-4 text-sm">
-                    <span class="text-gray-700 dark:text-gray-400">
-                        Multiselect
-                    </span>
-                    <select class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-multiselect focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" multiple>
-                        <option>Option 1</option>
-                        <option>Option 2</option>
-                        <option>Option 3</option>
-                        <option>Option 4</option>
-                        <option>Option 5</option>
-                    </select>
-                </label>
+                <!-- Dirección -->
+                <x-div.margin-top>
+                    <x-input.admin-text>
+                        <x-slot name="dato">
+                            Dirección
+                        </x-slot>
+                        <x-slot name="name">
+                            direccion
+                        </x-slot>
+                        <x-slot name="placeholder">
+                            Playa el Solecito
+                        </x-slot>
+                    </x-input.admin-text>
+                </x-div.margin-top>
 
-                <label class="block mt-4 text-sm">
-                    <span class="text-gray-700 dark:text-gray-400">Message</span>
-                    <textarea class="block w-full p-2 rounded-md mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-textarea focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" rows="3" placeholder="Enter some long form content."></textarea>
-                </label>
+                <!-- Aforo Máximo -->
+                <x-div.margin-top>
+                    <x-input.admin-number>
+                        <x-slot name="dato">
+                            Aforo Máximo
+                        </x-slot>
+                        <x-slot name="name">
+                            aforoMax
+                        </x-slot>
+                        <x-slot name="placeholder">
+                            1000
+                        </x-slot>
+                        <x-slot name="min">
+                            1
+                        </x-slot>
+                        <x-slot name="max">
+                            1000000
+                        </x-slot>
+                    </x-input.admin-number>
+                </x-div.margin-top>
 
-                <div class="flex mt-6 text-sm">
-                    <label class="flex items-center dark:text-gray-400">
-                        <input type="checkbox" class="text-purple-600 form-checkbox focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" />
-                        <span class="ml-2">
-                            I agree to the
-                            <span class="underline">privacy policy</span>
-                        </span>
-                    </label>
-                </div>
-            </div>
+                <!-- Presencialidad -->
+                <x-input.admin-ratio-holder>
+                    <x-slot name="dato">
+                        Presencialidad
+                    </x-slot>
+                    <x-input.admin-ratio-button :active="true">
+                        <x-slot name="tipo">
+                            Presencial
+                        </x-slot>
+                        <x-slot name="name">
+                            tipo
+                        </x-slot>
+                        <x-slot name="value">
+                            presencial
+                        </x-slot>
+                    </x-input.admin-ratio-button>
+                    <x-input.admin-ratio-button>
+                        <x-slot name="tipo">
+                            Online
+                        </x-slot>
+                        <x-slot name="name">
+                            tipo
+                        </x-slot>
+                        <x-slot name="value">
+                            online
+                        </x-slot>
+                    </x-input.admin-ratio-button>
+                </x-input.admin-ratio-holder>
+
+                <!-- Entradas por persona -->
+                <x-div.margin-top>
+                    <x-input.admin-number>
+                        <x-slot name="dato">
+                            Entradas por persona
+                        </x-slot>
+                        <x-slot name="name">
+                            entradasPersona
+                        </x-slot>
+                        <x-slot name="placeholder">
+                            10
+                        </x-slot>
+                        <x-slot name="min">
+                            1
+                        </x-slot>
+                        <x-slot name="max">
+                            10
+                        </x-slot>
+                    </x-input.admin-number>
+                </x-div.margin-top>
+
+                <!-- Categoría -->
+                <x-input.admin-select>
+                    <x-slot name="dato">
+                        Categoría
+                    </x-slot>
+                    <x-slot name="name">
+                        categoria
+                    </x-slot>
+
+                    <option value="">-- Categoría --</option>
+                    <option value="comida">Comida</option>
+                </x-input.admin-select>
+
+                <!-- Imagen -->
+                <x-div.margin-top>
+                    <x-input.admin-imagen>
+                        <x-slot name="dato">
+                            Imagen
+                        </x-slot>
+                        <x-slot name="name">
+                            imagen
+                        </x-slot>
+                    </x-input.admin-imagen>
+                </x-div.margin-top>
+
+                <x-div.margin-top>
+                    <x-button.purple-submit>
+                        Enviar
+                    </x-button.purple-submit>
+                </x-div.margin-top>
         </form>
     </div>
 </x-layout-admin>
