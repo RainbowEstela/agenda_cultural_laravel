@@ -47,7 +47,7 @@ Route::prefix("web")->group(function () {
         return view('web.detalle-evento');
     })->name("eventos.detalle");
 
-    Route::get('/eventos/{id}/incribirse', function () {
+    Route::get('/eventos/{id}/incribirse', function () { // CAMBIAR A POST
     })->name("eventos.incribirse");
 });
 
@@ -61,7 +61,7 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
         })->name('dashboard');
 
         Route::get('/create', function () { // TO DO
-            return view('dashboard');
+            return view('components.admin.evento-form-crear');
         })->name('evento.crear');
 
         Route::post('/store', function () { // TO DO
@@ -114,10 +114,10 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
             return view('dashboard');
         })->name('experiencia.borrar');
 
-        Route::get('/empresa/{id}/asignar/{id}', function () { // TO DO
+        Route::get('/empresa/{empresa}/asignar/{id}', function () { // TO DO
             return view('dashboard');
         })->name('experiencia.asignar');
-        Route::get('/empresa/{id}/quitar/{id}', function () { // TO DO
+        Route::get('/empresa/{empresa}/quitar/{id}', function () { // TO DO
             return view('dashboard');
         })->name('experiencia.quitar');
     });
