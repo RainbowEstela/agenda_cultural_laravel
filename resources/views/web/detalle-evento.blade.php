@@ -54,11 +54,39 @@
             </x-slot>
         </x-text.detail-border>
 
-        <x-slot name="ruta">
-            /
-        </x-slot>
         <x-slot name="boton">
-            Inscribirse
+            <form action="">
+                @csrf
+                <x-div.grid-uno>
+
+                    <input type="hidden" name="evento" value="1">
+
+                    <x-input.admin-number>
+                        <x-slot name="dato">
+                            Numero de entradas
+                        </x-slot>
+                        <x-slot name="name">
+                            entradas
+                        </x-slot>
+                        <x-slot name="placeholder">
+                            1
+                        </x-slot>
+                        <x-slot name="min">
+                            1
+                        </x-slot>
+                        <x-slot name="max">
+                            1000000 <!-- PONER EL LIMITE DEL EVENTO AQUI -->
+                        </x-slot>
+                    </x-input.admin-number>
+
+                    <x-button.blue-submit>
+                        Inscribirse
+                    </x-button.blue-submit>
+                </x-div.grid-uno>
+
+
+
+            </form>
         </x-slot>
     </x-div.hero>
 </x-app-web>

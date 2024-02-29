@@ -18,7 +18,7 @@
                     <span class="title-font font-medium text-2xl text-gray-900">{{$precio}}€/persona</span>
                     @endif
                     <div class="ml-auto">
-                        <a href="{{$ruta}}"><x-button.blue>{{$boton}}</x-button.blue></a>
+                        {{$boton}}
                     </div>
                 </div>
             </div>

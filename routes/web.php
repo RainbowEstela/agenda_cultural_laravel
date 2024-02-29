@@ -47,8 +47,9 @@ Route::prefix("web")->group(function () {
         return view('web.detalle-evento');
     })->name("eventos.detalle");
 
-    Route::get('/eventos/{id}/incribirse', function () { // CAMBIAR A POST
-    })->name("eventos.incribirse");
+    // incribirse a un evento
+    Route::post('/eventos', function () { // CAMBIAR A POST
+    })->name("eventos.incribirse")->middleware(['auth', 'verified']);
 });
 
 // Paginas Admin
@@ -103,7 +104,7 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
         })->name('experiencia.view');
 
         Route::get('/create', function () { // TO DO
-            return view('dashboard');
+            return view('components.admin.experiencia-form-crear');
         })->name('experiencia.crear');
 
         Route::post('/store', function () { // TO DO
