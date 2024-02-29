@@ -21,6 +21,8 @@ return new class extends Migration
             $table->double('precio', 10, 2);
             $table->string('link');
             $table->string('imagen');
+            $table->unsignedBigInteger("categoria_id")->nullable();
+            $table->foreign("categoria_id")->references('id')->on('categorias')->onDelete('set null');
             $table->unsignedBigInteger("empresa_id")->nullable();
             $table->foreign("empresa_id")->references('id')->on('empresas')->onDelete('set null');
             $table->timestamps();
