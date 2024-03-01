@@ -7,23 +7,23 @@
             @foreach($eventos as $evento)
             <x-div.card-evento>
                 <x-slot name="imagen">
-                    {{asset('storage/web/pueblo-portada.webp')}}
+                    {{asset('storage/eventos/'. $evento->imagen)}}
                 </x-slot>
 
                 <x-slot name="fecha">
-                    23-04-2023
+                    {{$evento->fecha}}
                 </x-slot>
 
                 <x-slot name="hora">
-                    12:00
+                    {{$evento->hora}}
                 </x-slot>
 
                 <x-slot name="nombre">
-                    Fiesta del vino
+                    {{$evento->nombre}}
                 </x-slot>
 
                 <x-slot name="descripcion">
-                    Reunión anual en el bar de Paco, Vino de la comarca a 50%.
+                    {{$evento->descripcion}}
                 </x-slot>
 
 
@@ -31,25 +31,25 @@
                     <x-slot name="dato">
                         Categoría
                     </x-slot>
-                    Comida
+                    {{$evento->categoria->nombre}}
                 </x-text.p-card>
 
                 <x-text.p-card>
                     <x-slot name="dato">
                         Aforo
                     </x-slot>
-                    40
+                    {{$evento->aforo}}
                 </x-text.p-card>
 
                 <x-text.p-card>
                     <x-slot name="dato">
                         Tipo
                     </x-slot>
-                    online
+                    {{$evento->tipo}}
                 </x-text.p-card>
 
                 <x-slot name="ruta">
-                    {{route('eventos.detalle',['id' => 1])}}
+                    {{route('eventos.detalle',['id' => $evento->id])}}
                 </x-slot>
             </x-div.card-evento>
             @endforeach

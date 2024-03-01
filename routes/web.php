@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\EventoController;
+use App\Http\Controllers\ExperienciaController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -15,9 +17,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 // pagina inicio web
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+Route::get('/', [EventoController::class, 'indexFirst'])->name('home');
 
 Route::prefix("web")->group(function () {
     // vista pagina estatica
@@ -27,36 +27,28 @@ Route::prefix("web")->group(function () {
 
 
     // vista de experiencias
-    Route::get('/experiencias', function () { // TO DO
-        return view('web.experiencias');
-    })->name("experiencias");
+    Route::get('/experiencias', [ExperienciaController::class, 'indexWeb'])->name("experiencias");
 
     // vista de experiencias detalle
-    Route::get('/experiencias/{id}', function () { // TO DO
-        return view('web.detalle-experiencia');
-    })->name("experiencias.detalle");
+    Route::get('/experiencias/{id}', [ExperienciaController::class, 'show'])->name("experiencias.detalle");
 
 
     // vista de eventos
-    Route::get('/eventos', function () { // TO DO
-        return view('web.agenda');
-    })->name("eventos");
+    Route::get('/eventos', [EventoController::class, 'indexWeb'])->name("eventos");
 
     // vista de detalle de evento
-    Route::get('/eventos/{id}', function () { // TO DO
-        return view('web.detalle-evento');
-    })->name("eventos.detalle");
+    Route::get('/eventos/{id}', [EventoController::class, 'show'])->name("eventos.detalle");
 
     // incribirse a un evento
-    Route::post('/eventos', function () { // CAMBIAR A POST
-    })->name("eventos.incribirse")->middleware(['auth', 'verified']);
+    Route::post('/eventos', function () { // HACER QUE FUNCIONE 
+    })->name("eventos.incribirse")->middleware(['auth', 'verified', 'mdrol:Asistente']);
 });
 
 // Paginas Admin
 
 Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
     // Rutas de eventos
-    Route::prefix('eventos')->group(function () {
+    Route::prefix('eventos')->middleware(['mdrol:Admin|CreadorEventos'])->group(function () {
         Route::get('/view', function () { // TO DO
             return view('dashboard');
         })->name('dashboard');
@@ -87,7 +79,7 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
     });
 
     // Rutas de inscripciones
-    Route::prefix('incripciones')->group(function () {
+    Route::prefix('incripciones')->middleware(['mdrol:Admin|CreadorEventos'])->group(function () {
         Route::get('/evento/{id}', function () { // TO DO
             return view('dashboard');
         })->name('incripcion.view');
@@ -98,7 +90,8 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
     });
 
     // Rutas de experiencias
-    Route::prefix('experiencias')->group(function () {
+    //                            Las experiencias solo las gestionan los admins
+    Route::prefix('experiencias')->middleware(['mdrol:Admin'])->group(function () {
         Route::get('/view', function () { // TO DO
             return view('components.admin.experiencia-view');
         })->name('experiencia.view');
@@ -124,7 +117,7 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
     });
 
     // Rutas de usuarios
-    Route::prefix('usuarios')->group(function () {
+    Route::prefix('usuarios')->middleware(['mdrol:Admin'])->group(function () {
         Route::get('/view', function () { // TO DO
             return view('components.admin.usuario-view');
         })->name('usuario.view');
@@ -135,7 +128,7 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
     });
 
     // Rutas de categorias
-    Route::prefix('categorias')->group(function () {
+    Route::prefix('categorias')->middleware(['mdrol:Admin'])->group(function () {
         Route::get('/view', function () { // TO DO
             return view('components.admin.categoria-view');
         })->name('categoria.view');
@@ -154,7 +147,7 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
     });
 
     // Rutas de empresa
-    Route::prefix('empresas')->group(function () {
+    Route::prefix('empresas')->middleware(['mdrol:Admin'])->group(function () {
         Route::get('/view', function () { // TO DO
             return view('components.admin.empresa-view');
         })->name('empresa.view');

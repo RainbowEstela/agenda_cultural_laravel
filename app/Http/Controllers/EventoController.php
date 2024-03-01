@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Categoria;
 use App\Models\Evento;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,21 @@ class EventoController extends Controller
      */
     public function index()
     {
-        //
+    }
+
+    // indice de la agenda web
+    public function indexWeb()
+    {
+        $eventos = Evento::where('estado', 'creado')->where('fecha', '>=', now())->paginate(8);
+        $categorias = Categoria::All();
+        return view('web.agenda', ['eventos' => $eventos, 'categorias' => $categorias]);
+    }
+
+    // inidice de los primeros eventos para la home web
+    public function indexFirst()
+    {
+        $eventos = Evento::where('estado', 'creado')->where('fecha', '>=', now())->orderBy('fecha', 'asc')->limit(4)->get();
+        return view('welcome', ['eventos' => $eventos]);
     }
 
     /**
@@ -34,9 +49,11 @@ class EventoController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Evento $evento)
+    public function show($id)
     {
-        //
+        $evento = Evento::find($id);
+
+        return view('web.detalle-evento', ['evento' => $evento]);
     }
 
     /**

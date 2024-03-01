@@ -1,0 +1,1 @@
+<h3 class="leading-relaxed text-base font-semibold text-gray-900 mt-4">{{$slot}}</h3>

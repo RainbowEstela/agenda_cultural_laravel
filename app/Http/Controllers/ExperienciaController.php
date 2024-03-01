@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Categoria;
 use App\Models\Experiencia;
 use Illuminate\Http\Request;
 
@@ -13,6 +14,15 @@ class ExperienciaController extends Controller
     public function index()
     {
         //
+    }
+
+    // muestra la experiencias en la web
+    public function indexWeb()
+    {
+        $experiencias = Experiencia::where('fecha', '>=', now())->paginate(8);
+        $categorias = Categoria::All();
+
+        return view('web.experiencias', ['experiencias' => $experiencias, 'categorias' => $categorias]);
     }
 
     /**
@@ -34,9 +44,11 @@ class ExperienciaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Experiencia $experiencia)
+    public function show($id)
     {
-        //
+        $experiencia = Experiencia::find($id);
+
+        return view('web.detalle-experiencia', ['experiencia' => $experiencia]);
     }
 
     /**

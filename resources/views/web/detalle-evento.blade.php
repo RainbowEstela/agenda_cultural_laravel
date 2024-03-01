@@ -1,16 +1,24 @@
 <x-app-web>
+    miqota
+    @foreach($evento->inscriptions as $inscription)
+    {{$inscription}}
+    @endforeach
     <x-div.hero>
+        <x-slot name="imagen">
+            {{asset('storage/eventos/' . $evento->imagen)}}
+        </x-slot>
+
         <x-slot name="fecha">
-            24-06-2023
+            {{$evento->fecha}}
         </x-slot>
         <x-slot name="hora">
-            16:00
+            {{$evento->hora}}
         </x-slot>
         <x-slot name="nombre">
-            Fiesta del vino
+            {{$evento->nombre}}
         </x-slot>
         <x-slot name="descripcion">
-            A beber vino en el bar de Paco a 50%.
+            {{$evento->descripcion}}
         </x-slot>
 
         <x-text.detail-border>
@@ -18,7 +26,7 @@
                 Ciudad
             </x-slot>
             <x-slot name="valor">
-                Malaga
+                {{$evento->ciudad}}
             </x-slot>
         </x-text.detail-border>
         <x-text.detail-border>
@@ -26,7 +34,7 @@
                 Direccion
             </x-slot>
             <x-slot name="valor">
-                calle los Santos nº4
+                {{$evento->direccion}}
             </x-slot>
         </x-text.detail-border>
         <x-text.detail-border>
@@ -34,7 +42,7 @@
                 Aforo
             </x-slot>
             <x-slot name="valor">
-                40
+                {{$evento->aforo}}
             </x-slot>
         </x-text.detail-border>
         <x-text.detail-border>
@@ -42,7 +50,7 @@
                 Tipo
             </x-slot>
             <x-slot name="valor">
-                Presencial
+                {{$evento->tipo}}
             </x-slot>
         </x-text.detail-border>
         <x-text.detail-border>
@@ -50,12 +58,13 @@
                 Categoria
             </x-slot>
             <x-slot name="valor">
-                Comida
+                {{$evento->categoria->nombre}}
             </x-slot>
         </x-text.detail-border>
 
         <x-slot name="boton">
-            <form action="">
+            @if(Auth::user()->rol == 'Asistente')
+            <form action="{{route('eventos.incribirse')}}" method="post">
                 @csrf
                 <x-div.grid-uno>
 
@@ -75,7 +84,7 @@
                             1
                         </x-slot>
                         <x-slot name="max">
-                            1000000 <!-- PONER EL LIMITE DEL EVENTO AQUI -->
+                            {{$evento->entradas_persona}}
                         </x-slot>
                     </x-input.admin-number>
 
@@ -83,10 +92,8 @@
                         Inscribirse
                     </x-button.blue-submit>
                 </x-div.grid-uno>
-
-
-
             </form>
+            @endif
         </x-slot>
     </x-div.hero>
 </x-app-web>

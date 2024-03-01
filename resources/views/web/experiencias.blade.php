@@ -8,13 +8,11 @@
                     <x-slot name="id">categoria</x-slot>
 
                     <option value="" selected>Categoría</option>
-                    <option value="cine">Cine</option>
-                    <option value="musica">Música</option>
-                    <option value="teatro">Teatro</option>
-                    <option value="magia">Magia</option>
-                    <option value="festival">Festival</option>
-                    <option value="gaming">Gaming</option>
-                    <option value="gastronomia">Gastronomía</option>
+                    @if(isset($categorias))
+                    @foreach($categorias as $categoria)
+                    <option value="{{$categoria->id}}">{{$categoria->nombre}}</option>
+                    @endforeach
+                    @endif
                 </x-input.select-blue>
                 <div class="w-fit">
                     <x-button.blue-submit>
@@ -37,28 +35,28 @@
         </form>
         <x-text.title>Lista de experiencias</x-text.title>
 
-        @if(isset($eventos))
+        @if(isset($experiencias))
         <x-div.grid>
-            @foreach($eventos as $evento)
+            @foreach($experiencias as $experiencia)
             <x-div.card-evento>
                 <x-slot name="imagen">
-                    {{asset('storage/web/pueblo-portada.webp')}}
+                    {{asset('storage/experiencias/' . $experiencia->imagen)}}
                 </x-slot>
 
                 <x-slot name="fecha">
-                    23-04-2023
+                    {{$experiencia->fecha}}
                 </x-slot>
 
                 <x-slot name="hora">
-                    4 días
+                    {{$experiencia->fecha_string}}
                 </x-slot>
 
                 <x-slot name="nombre">
-                    spa dulces sueños
+                    {{$experiencia->nombre}}
                 </x-slot>
 
                 <x-slot name="descripcion">
-                    Relajese en nuestro spa 5 estrellas con todas las comodidades con maravillosas vistas al mar
+                    {{$experiencia->descripcion_corta}}
                 </x-slot>
 
 
@@ -66,18 +64,20 @@
                     <x-slot name="dato">
                         Precio por persona
                     </x-slot>
-                    40€
+                    {{$experiencia->precio}}€
                 </x-text.p-card>
 
                 <x-slot name="ruta">
-                    {{route('experiencias.detalle',['id' => 1])}}
+                    {{route('experiencias.detalle',['id' => $experiencia->id])}}
                 </x-slot>
             </x-div.card-evento>
             @endforeach
         </x-div.grid>
+        {{$experiencias->links()}}
         @else
         <x-text.mensaje-error>No hay experiencias a la vista</x-text.mensaje-error>
         @endif
+
     </x-div.principal>
 
 </x-app-web>

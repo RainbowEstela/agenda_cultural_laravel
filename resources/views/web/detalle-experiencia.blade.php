@@ -1,56 +1,38 @@
 <x-app-web>
     <x-div.hero>
+        <x-slot name="imagen">
+            {{asset('storage/experiencias/' . $experiencia->imagen)}}
+        </x-slot>
         <x-slot name="fecha">
-            24-06-2023
+            {{$experiencia->fecha}}
         </x-slot>
         <x-slot name="hora">
-            16:00
+            {{$experiencia->fecha_string}}
         </x-slot>
         <x-slot name="nombre">
-            Fiesta del vino
+            {{$experiencia->nombre}}
         </x-slot>
         <x-slot name="descripcion">
-            A beber vino en el bar de Paco a 50%.
+            <x-text.h3>
+                Descripción
+            </x-text.h3>
+            <p>
+                {{$experiencia->descripcion_larga}}
+            </p>
+            <x-text.h3>
+                Información de la empresa
+            </x-text.h3>
+            <p>
+                {{$experiencia->empresa->informacion_extra}}
+            </p>
+            <br>
         </x-slot>
-
-        <x-text.detail-border>
-            <x-slot name="dato">
-                Ciudad
-            </x-slot>
-            <x-slot name="valor">
-                Malaga
-            </x-slot>
-        </x-text.detail-border>
-        <x-text.detail-border>
-            <x-slot name="dato">
-                Direccion
-            </x-slot>
-            <x-slot name="valor">
-                calle los Santos nº4
-            </x-slot>
-        </x-text.detail-border>
-        <x-text.detail-border>
-            <x-slot name="dato">
-                Aforo
-            </x-slot>
-            <x-slot name="valor">
-                40
-            </x-slot>
-        </x-text.detail-border>
-        <x-text.detail-border>
-            <x-slot name="dato">
-                Tipo
-            </x-slot>
-            <x-slot name="valor">
-                Presencial
-            </x-slot>
-        </x-text.detail-border>
         <x-text.detail-border>
             <x-slot name="dato">
                 Categoria
             </x-slot>
             <x-slot name="valor">
-                Comida
+                {{$experiencia->categoria->nombre}}
             </x-slot>
         </x-text.detail-border>
         <x-slot name="precio">
@@ -59,7 +41,7 @@
 
 
         <x-slot name="boton">
-            <a href="/">
+            <a href="{{$experiencia->link}}">
                 <x-button.blue>
                     Ir al sitio
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="ms-2" viewBox="0 0 16 16">

@@ -8,13 +8,11 @@
                     <x-slot name="id">categoria</x-slot>
 
                     <option value="" selected>Categoría</option>
-                    <option value="cine">Cine</option>
-                    <option value="musica">Música</option>
-                    <option value="teatro">Teatro</option>
-                    <option value="magia">Magia</option>
-                    <option value="festival">Festival</option>
-                    <option value="gaming">Gaming</option>
-                    <option value="gastronomia">Gastronomía</option>
+                    @if(isset($categorias))
+                    @foreach($categorias as $categoria)
+                    <option value="{{$categoria->id}}">{{$categoria->nombre}}</option>
+                    @endforeach
+                    @endif
                 </x-input.select-blue>
                 <div class="w-fit">
                     <x-button.blue-submit>
@@ -42,23 +40,23 @@
             @foreach($eventos as $evento)
             <x-div.card-evento>
                 <x-slot name="imagen">
-                    {{asset('storage/web/pueblo-portada.webp')}}
+                    {{asset('storage/eventos/'. $evento->imagen)}}
                 </x-slot>
 
                 <x-slot name="fecha">
-                    23-04-2023
+                    {{$evento->fecha}}
                 </x-slot>
 
                 <x-slot name="hora">
-                    12:00
+                    {{$evento->hora}}
                 </x-slot>
 
                 <x-slot name="nombre">
-                    Fiesta del vino
+                    {{$evento->nombre}}
                 </x-slot>
 
                 <x-slot name="descripcion">
-                    Reunión anual en el bar de Paco, Vino de la comarca a 50%.
+                    {{$evento->descripcion}}
                 </x-slot>
 
 
@@ -66,31 +64,33 @@
                     <x-slot name="dato">
                         Categoría
                     </x-slot>
-                    Comida
+                    {{$evento->categoria->nombre}}
                 </x-text.p-card>
 
                 <x-text.p-card>
                     <x-slot name="dato">
                         Aforo
                     </x-slot>
-                    40
+                    {{$evento->aforo}}
                 </x-text.p-card>
 
                 <x-text.p-card>
                     <x-slot name="dato">
                         Tipo
                     </x-slot>
-                    online
+                    {{$evento->tipo}}
                 </x-text.p-card>
 
                 <x-slot name="ruta">
-                    {{route('eventos.detalle',['id' => 1])}}
+                    {{route('eventos.detalle',['id' => $evento->id])}}
                 </x-slot>
             </x-div.card-evento>
             @endforeach
         </x-div.grid>
+        {{$eventos->links()}}
         @else
         <x-text.mensaje-error>No hay eventos a la vista</x-text.mensaje-error>
         @endif
+
     </x-div.principal>
 </x-app-web>
