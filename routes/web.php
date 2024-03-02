@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\EventoController;
 use App\Http\Controllers\ExperienciaController;
+use App\Http\Controllers\InscriptionController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -40,8 +42,7 @@ Route::prefix("web")->group(function () {
     Route::get('/eventos/{id}', [EventoController::class, 'show'])->name("eventos.detalle");
 
     // incribirse a un evento
-    Route::post('/eventos', function () { // HACER QUE FUNCIONE 
-    })->name("eventos.incribirse")->middleware(['auth', 'verified', 'mdrol:Asistente']);
+    Route::post('/eventos', [InscriptionController::class, 'inscribirse'])->name("eventos.incribirse")->middleware(['auth', 'verified', 'mdrol:Asistente']);
 });
 
 // Paginas Admin
@@ -49,9 +50,7 @@ Route::prefix("web")->group(function () {
 Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
     // Rutas de eventos
     Route::prefix('eventos')->middleware(['mdrol:Admin|CreadorEventos'])->group(function () {
-        Route::get('/view', function () { // TO DO
-            return view('dashboard');
-        })->name('dashboard');
+        Route::get('/view', [EventoController::class, 'index'])->name('dashboard');
 
         Route::get('/create', function () { // TO DO
             return view('components.admin.evento-form-crear');
@@ -92,9 +91,7 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
     // Rutas de experiencias
     //                            Las experiencias solo las gestionan los admins
     Route::prefix('experiencias')->middleware(['mdrol:Admin'])->group(function () {
-        Route::get('/view', function () { // TO DO
-            return view('components.admin.experiencia-view');
-        })->name('experiencia.view');
+        Route::get('/view', [ExperienciaController::class, 'index'])->name('experiencia.view');
 
         Route::get('/create', function () { // TO DO
             return view('components.admin.experiencia-form-crear');
@@ -148,9 +145,7 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
 
     // Rutas de empresa
     Route::prefix('empresas')->middleware(['mdrol:Admin'])->group(function () {
-        Route::get('/view', function () { // TO DO
-            return view('components.admin.empresa-view');
-        })->name('empresa.view');
+        Route::get('/view', [EmpresaController::class, 'index'])->name('empresa.view');
 
         Route::get('/create', function () { // TO DO
             return view('components.admin.empresa-form-crear');

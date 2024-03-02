@@ -16,6 +16,11 @@ class Evento extends Model
         return $this->belongsTo(Categoria::class);
     }
 
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function inscriptions(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'inscriptions')->withPivot(['numero_entradas', 'estado']);

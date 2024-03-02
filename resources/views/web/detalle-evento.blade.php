@@ -1,8 +1,4 @@
 <x-app-web>
-    miqota
-    @foreach($evento->inscriptions as $inscription)
-    {{$inscription}}
-    @endforeach
     <x-div.hero>
         <x-slot name="imagen">
             {{asset('storage/eventos/' . $evento->imagen)}}
@@ -63,12 +59,14 @@
         </x-text.detail-border>
 
         <x-slot name="boton">
+            @if(Auth::user())
             @if(Auth::user()->rol == 'Asistente')
+            @if(!$inscripto)
             <form action="{{route('eventos.incribirse')}}" method="post">
                 @csrf
                 <x-div.grid-uno>
 
-                    <input type="hidden" name="evento" value="1">
+                    <input type="hidden" name="evento" value="{{$evento->id}}">
 
                     <x-input.admin-number>
                         <x-slot name="dato">
@@ -93,6 +91,16 @@
                     </x-button.blue-submit>
                 </x-div.grid-uno>
             </form>
+            @else
+            <x-button.disabled>Inscrito/a</x-button.disabled>
+            @endif
+
+            @else
+            <x-button.disabled>Solo Asistentes</x-button.disabled>
+            @endif
+
+            @else
+            <x-button.disabled>Necesita cuenta</x-button.disabled>
             @endif
         </x-slot>
     </x-div.hero>

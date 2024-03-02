@@ -1,8 +1,8 @@
 <x-guest-layout>
     <form method="POST" action="{{ route('register') }}">
         @csrf
-        <x-text.h3>Nuevo asistente</x-text.h3>
-        <input type="hidden" name="rol" value="Asistente">
+        <x-text.h3>Nuevo creador de eventos</x-text.h3>
+        <input type="hidden" name="rol" value="CreadorEventos">
         <!-- Name -->
         <div class="mt-4">
             <x-input-label for="name" :value="__('Name')" />
@@ -31,11 +31,11 @@
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
-        <!-- Edad -->
+        <!-- Teléfono -->
         <div class="mt-4">
-            <x-input-label for="edad" :value="__('Edad')" />
-            <x-text-input id="edad" class="block mt-1 w-full" type="number" min="1" max="200" name="edad" :value="old('edad')" required autofocus autocomplete="edad" />
-            <x-input-error :messages="$errors->get('edad')" class="mt-2" />
+            <x-input-label for="telefono" :value="__('Teléfono')" />
+            <x-text-input id="telefono" class="block mt-1 w-full" type="text" name="telefono" :value="old('telefono')" required autofocus autocomplete="telefono" />
+            <x-input-error :messages="$errors->get('telefono')" class="mt-2" />
         </div>
 
         <!-- Dirección -->
@@ -52,11 +52,27 @@
             <x-input-error :messages="$errors->get('ciudad')" class="mt-2" />
         </div>
 
-        <!-- Teléfono -->
+        <!-- Empresa -->
         <div class="mt-4">
-            <x-input-label for="telefono" :value="__('Teléfono')" />
-            <x-text-input id="telefono" class="block mt-1 w-full" type="text" name="telefono" :value="old('telefono')" required autofocus autocomplete="telefono" />
-            <x-input-error :messages="$errors->get('telefono')" class="mt-2" />
+            <x-input-label for="empresa" :value="__('Empresa')" />
+            <x-input.select-form id="empresa" class="block mt-1 w-full" type="text" name="empresa" :value="old('empresa')" required autofocus autocomplete="empresa">
+                @if($empresas)
+                @foreach($empresas as $empresa)
+
+                <option value="{{$empresa->id}}">{{$empresa->nombre}}</option>
+
+                @endforeach
+                @endif
+            </x-input.select-form>
+            <x-input-error :messages="$errors->get('Empresa')" class="mt-2" />
+        </div>
+
+
+        <!-- Puesto -->
+        <div class="mt-4">
+            <x-input-label for="puesto" :value="__('Puesto')" />
+            <x-text-input id="puesto" class="block mt-1 w-full" type="text" name="puesto" :value="old('puesto')" required autofocus autocomplete="puesto" />
+            <x-input-error :messages="$errors->get('puesto')" class="mt-2" />
         </div>
 
 
@@ -84,8 +100,8 @@
                     {{ __('Already registered?') }}
                 </a>
 
-                <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('register.creador') }}">
-                    {{ __('¿Eres creador de eventos?') }}
+                <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('register') }}">
+                    {{ __('¿Eres asistente?') }}
                 </a>
             </div>
 

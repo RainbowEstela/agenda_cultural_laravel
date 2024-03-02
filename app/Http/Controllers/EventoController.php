@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Categoria;
 use App\Models\Evento;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class EventoController extends Controller
 {
@@ -13,6 +14,9 @@ class EventoController extends Controller
      */
     public function index()
     {
+        $eventos = Evento::paginate(10);
+
+        return view('dashboard', ['eventos' => $eventos]);
     }
 
     // indice de la agenda web
@@ -52,8 +56,23 @@ class EventoController extends Controller
     public function show($id)
     {
         $evento = Evento::find($id);
+        $userId = null;
+        if (Auth::user()) {
+            $userId = Auth::user()->id;
+        }
 
-        return view('web.detalle-evento', ['evento' => $evento]);
+
+        $yaInscrito = false;
+
+        if ($userId) {
+            foreach ($evento->inscriptions as $inscription) {
+                if ($userId == $inscription->id) {
+                    $yaInscrito = true;
+                    break;
+                }
+            }
+        }
+        return view('web.detalle-evento', ['evento' => $evento, 'inscripto' => $yaInscrito]);
     }
 
     /**

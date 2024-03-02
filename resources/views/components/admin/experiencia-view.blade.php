@@ -23,25 +23,37 @@
             <x-table.th>Empresa</x-table.th>
             <x-table.th>Acciones</x-table.th>
         </x-slot>
+        @if(isset($experiencias))
+        @foreach($experiencias as $experiencia)
         <tr>
-            <x-table.td>Fiesta del vino</x-table.td>
+            <x-table.td>{{$experiencia->nombre}}</x-table.td>
             <x-table.td>
-                <p>23-06-2023</p>
+                <p>{{$experiencia->fecha}}</p>
             </x-table.td>
-            <x-table.td>Una semana</x-table.td>
+            <x-table.td>{{$experiencia->fecha_string}}</x-table.td>
             <x-table.td>
-                <p class="max-h-28 overflow-y-scroll">Ah beber vino al bar de pepe con un 50% para celebrar que acabamos el año</p>
+                <p class="max-h-28 overflow-y-scroll">{{$experiencia->descripcion_corta}}</p>
             </x-table.td>
             <x-table.td>
-                <p class="max-h-28 overflow-y-scroll">Ah beber vino al bar de pepe con un 50% para celebrar que acabamos el año</p>
+                <p class="max-h-28 overflow-y-scroll">{{$experiencia->descripcion_larga}}</p>
             </x-table.td>
-            <x-table.td>40€/persona</x-table.td>
+            <x-table.td>{{$experiencia->precio}}€/persona</x-table.td>
             <x-table.td>
-                <p><x-link.purple>Enlace</x-link.purple></p>
+                <p>
+                    <x-link.purple>
+                        <x-slot name="target">
+                            _blank
+                        </x-slot>
+                        <x-slot name="href">
+                            {{$experiencia->link}}
+                        </x-slot>
+                        Enlace
+                    </x-link.purple>
+                </p>
             </x-table.td>
             <x-table.td>
                 <div class="flex items-center text-sm">
-                    <p><x-link.purple>Empresa</x-link.purple></p>
+                    <p>{{$experiencia->empresa->nombre}}</p>
                     <button class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray" aria-label="Edit">
                         <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
                             <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"></path>
@@ -61,6 +73,9 @@
                 </div>
             </x-table.td>
         </tr>
+        @endforeach
+        {{$experiencias->links()}}
+        @endif
 
     </x-table.skeleton>
 </x-layout-admin>

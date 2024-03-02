@@ -12,7 +12,9 @@ class EmpresaController extends Controller
      */
     public function index()
     {
-        //
+        $empresas = Empresa::paginate(10);
+
+        return view('components.admin.empresa-view', ['empresas' => $empresas]);
     }
 
     /**

@@ -27,26 +27,48 @@
             <x-table.th>Creador</x-table.th>
             <x-table.th>Acciones</x-table.th>
         </x-slot>
+        @if(isset($eventos))
+        @foreach($eventos as $evento)
         <tr>
-            <x-table.td>Fiesta del vino</x-table.td>
+            <x-table.td>{{$evento->nombre}}</x-table.td>
             <x-table.td>
-                <p>23-06-2023</p>
-                <p>17:00</p>
+                <p>{{$evento->fecha}}</p>
+                <p>{{$evento->hora}}</p>
             </x-table.td>
             <x-table.td>
-                <p class="max-h-28 overflow-y-scroll">Ah beber vino al bar de pepe con un 50% para celebrar que acabamos el año</p>
+                <p class="max-h-28 overflow-y-scroll">{{$evento->descripcion}}</p>
             </x-table.td>
-            <x-table.td>Vera</x-table.td>
-            <x-table.td>Mi casa</x-table.td>
-            <x-table.td><x-text.positive>Creado</x-text.positive></x-table.td>
-            <x-table.td>300</x-table.td>
-            <x-table.td>Presencial</x-table.td>
-            <x-table.td>4</x-table.td>
-            <x-table.td>Comida</x-table.td>
+            <x-table.td>{{$evento->ciudad}}</x-table.td>
+            <x-table.td>{{$evento->direccion}}</x-table.td>
             <x-table.td>
-                <p><x-link.purple>Ver</x-link.purple></p>
+                @if($evento->estado == 'creado')
+                <x-text.positive>Creado</x-text.positive>
+                @elseif($evento->estado == 'cancelado')
+                <x-text.negative>Cancelado</x-text.negative>
+                @elseif($evento->estado == 'terminado')
+                <x-text.expired>Terminado</x-text.expired>
+                @else
+                error cargando estado
+                @endif
             </x-table.td>
-            <x-table.td>una fulana</x-table.td>
+            <x-table.td>{{$evento->aforo}}</x-table.td>
+            <x-table.td>{{$evento->tipo}}</x-table.td>
+            <x-table.td>{{$evento->entradas_persona}}</x-table.td>
+            <x-table.td>{{$evento->categoria->nombre}}</x-table.td>
+            <x-table.td>
+                <p>
+                    <x-link.purple>
+                        <x-slot name="target">
+                            _blank
+                        </x-slot>
+                        <x-slot name="href">
+                            {{asset('storage/eventos/' . $evento->imagen)}}
+                        </x-slot>
+                        Ver
+                    </x-link.purple>
+                </p>
+            </x-table.td>
+            <x-table.td>{{$evento->user->email}}</x-table.td>
             <x-table.td>
                 <div class="flex items-center space-x-4 text-sm">
                     <button class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray" aria-label="Edit">
@@ -62,6 +84,8 @@
                 </div>
             </x-table.td>
         </tr>
-
+        @endforeach
+        {{$eventos->links()}}
+        @endif
     </x-table.skeleton>
 </x-layout-admin>

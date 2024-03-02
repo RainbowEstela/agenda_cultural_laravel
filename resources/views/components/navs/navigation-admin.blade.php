@@ -25,6 +25,7 @@
                                     {{ __('Eventos') }}
                                 </x-navs.dropdown-link-admin>
                             </ul>
+                            @if(Auth::user()->rol == 'Admin')
                             <ul>
                                 <x-navs.dropdown-link-admin :href="route('experiencia.view')" :active="request()->routeIs('experiencia.view')">
                                     <x-slot name="svg">
@@ -53,6 +54,7 @@
                                     {{ __('Usuarios') }}
                                 </x-navs.dropdown-link-admin>
                             </ul>
+                            @endif
                         </div>
                     </aside>
                 </x-slot>

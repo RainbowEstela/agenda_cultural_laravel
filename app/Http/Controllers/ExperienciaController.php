@@ -13,7 +13,9 @@ class ExperienciaController extends Controller
      */
     public function index()
     {
-        //
+        $experiencias = Experiencia::paginate(8);
+
+        return view('components.admin.experiencia-view', ['experiencias' => $experiencias]);
     }
 
     // muestra la experiencias en la web

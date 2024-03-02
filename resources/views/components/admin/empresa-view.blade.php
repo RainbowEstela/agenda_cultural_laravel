@@ -21,18 +21,30 @@
             <x-table.th>Información Extra</x-table.th>
             <x-table.th>acciones</x-table.th>
         </x-slot>
+        @if(isset($empresas))
+        @foreach($empresas as $empresa)
         <tr>
-            <x-table.td>Fiesta del vino</x-table.td>
+            <x-table.td>{{$empresa->nombre}}</x-table.td>
             <x-table.td>
-                Vera - calle camino del centro nº4
+                {{$empresa->direccion}}
             </x-table.td>
-            <x-table.td>609606060</x-table.td>
-            <x-table.td>empresa@gmail.com</x-table.td>
+            <x-table.td>{{$empresa->telefono}}</x-table.td>
+            <x-table.td>{{$empresa->email}}</x-table.td>
             <x-table.td>
-                <p><x-link.purple>Enlace</x-link.purple></p>
+                <p>
+                    <x-link.purple>
+                        <x-slot name="target">
+                            _blank
+                        </x-slot>
+                        <x-slot name="href">
+                            {{$empresa->web}}
+                        </x-slot>
+                        Enlace
+                    </x-link.purple>
+                </p>
             </x-table.td>
             <x-table.td>
-                <p class="max-h-28 overflow-y-scroll">Somos una pequeña empresa encargada de organizar experiencias de todo tipo y para todas las edades</p>
+                <p class="max-h-28 overflow-y-scroll">{{$empresa->informacion_extra}}</p>
             </x-table.td>
 
             <x-table.td>
@@ -45,6 +57,8 @@
                 </div>
             </x-table.td>
         </tr>
-
+        @endforeach
+        {{$empresas->links()}}
+        @endif
     </x-table.skeleton>
 </x-layout-admin>
