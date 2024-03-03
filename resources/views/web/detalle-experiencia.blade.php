@@ -1,4 +1,5 @@
 <x-app-web>
+    @if($experiencia)
     <x-div.hero>
         <x-slot name="imagen">
             {{asset('storage/experiencias/' . $experiencia->imagen)}}
@@ -55,4 +56,5 @@
             </a>
         </x-slot>
     </x-div.hero>
+    @endif
 </x-app-web>

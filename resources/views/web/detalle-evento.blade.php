@@ -1,4 +1,5 @@
 <x-app-web>
+    @if($evento)
     <x-div.hero>
         <x-slot name="imagen">
             {{asset('storage/eventos/' . $evento->imagen)}}
@@ -106,4 +107,5 @@
             @endif
         </x-slot>
     </x-div.hero>
+    @endif
 </x-app-web>

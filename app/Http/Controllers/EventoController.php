@@ -39,7 +39,9 @@ class EventoController extends Controller
      */
     public function create()
     {
-        //
+        $categorias = Categoria::orderBy('nombre', 'asc')->get();
+
+        return view('components.admin.evento-form-crear', ['categorias' => $categorias]);
     }
 
     /**
@@ -47,7 +49,62 @@ class EventoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nombre' => ['required', 'string', 'max:255'],
+            'fecha' => ['required', 'date'],
+            'hora' => ['required', 'numeric', 'digits_between:1,2'],
+            'minutos' => ['required', 'numeric', 'digits_between:1,2'],
+            'descripcion' => ['required', 'string', 'max:400'],
+            'ciudad' => ['required', 'string', 'max:255'],
+            'direccion' => ['required', 'string', 'max:255'],
+            'aforoMax' => ['required', 'numeric'],
+            'imagen' => ['required'],
+            'tipo' => ['required', 'string', 'max:255'],
+            'entradasPersona' => ['required', 'numeric'],
+        ]);
+
+        // combinar hora y minutos
+        $hora = null;
+        $minutos = null;
+
+        if ($request->hora < 10) {
+            $hora = '0' . $request->hora;
+        } else {
+            $hora = $request->hora;
+        }
+
+        if ($request->minutos < 10) {
+            $minutos = '0' . $request->minutos;
+        } else {
+            $minutos = $request->minutos;
+        }
+
+        $horaCompleta = $hora . ':' . $minutos;
+
+        // guardar imagen
+        $ruta = $request->file("imagen")->store('public/eventos');
+        $rutaArray = explode("/", $ruta);
+        $imagen = $rutaArray[count($rutaArray) - 1];
+
+        // crear modelo
+        $evento = new Evento();
+        $evento->nombre = $request->nombre;
+        $evento->fecha = $request->fecha;
+        $evento->hora = $horaCompleta;
+        $evento->descripcion = $request->descripcion;
+        $evento->ciudad = $request->ciudad;
+        $evento->direccion = $request->direccion;
+        $evento->estado = 'creado';
+        $evento->aforo = $request->aforoMax;
+        $evento->tipo = $request->tipo;
+        $evento->imagen = $imagen;
+        $evento->entradas_persona = $request->entradasPersona;
+        $evento->categoria_id = $request->categoria;
+        $evento->user_id = $request->user()->id;
+        $evento->save();
+
+        // volver a la vista de eventos
+        return redirect()->route('dashboard');
     }
 
     /**
@@ -64,7 +121,7 @@ class EventoController extends Controller
 
         $yaInscrito = false;
 
-        if ($userId) {
+        if ($userId && $evento) {
             foreach ($evento->inscriptions as $inscription) {
                 if ($userId == $inscription->id) {
                     $yaInscrito = true;
@@ -78,24 +135,112 @@ class EventoController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Evento $evento)
+    public function edit($id)
     {
-        //
+        $evento = Evento::find($id);
+
+        if (Auth::user()->rol != 'Admin') {
+            if (Auth::user()->id != $evento->user_id) {
+                return redirect()->route('dashboard');
+            }
+        }
+
+        $evento = Evento::find($id);
+        $categorias = Categoria::orderBy('nombre', 'asc')->get();
+
+        return view('components.admin.evento-form-modificar', ['evento' => $evento, 'categorias' => $categorias]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Evento $evento)
+    public function update(Request $request)
     {
-        //
+        $request->validate([
+            'nombre' => ['required', 'string', 'max:255'],
+            'estado' => ['required', 'string', 'max:255'],
+            'fecha' => ['required', 'date'],
+            'hora' => ['required', 'numeric', 'digits_between:1,2'],
+            'minutos' => ['required', 'numeric', 'digits_between:1,2'],
+            'descripcion' => ['required', 'string', 'max:400'],
+            'ciudad' => ['required', 'string', 'max:255'],
+            'direccion' => ['required', 'string', 'max:255'],
+            'aforoMax' => ['required', 'numeric'],
+            'tipo' => ['required', 'string', 'max:255'],
+            'entradasPersona' => ['required', 'numeric'],
+        ]);
+
+        // buscar evento
+        $evento = Evento::find($request->id);
+
+        if (Auth::user()->rol != 'Admin') {
+            if (Auth::user()->id != $evento->user_id) {
+                return redirect()->route('dashboard');
+            }
+        }
+
+        // guardar imagen
+        if ($request->imagen) {
+            $ruta = $request->file("imagen")->store('public/eventos');
+            $rutaArray = explode("/", $ruta);
+            $imagen = $rutaArray[count($rutaArray) - 1];
+
+            // guardar la imagen nueva
+            $evento->imagen = $imagen;
+        }
+
+        // combinar hora y minutos
+        $hora = null;
+        $minutos = null;
+
+        if ($request->hora < 10) {
+            $hora = '0' . $request->hora;
+        } else {
+            $hora = $request->hora;
+        }
+
+        if ($request->minutos < 10) {
+            $minutos = '0' . $request->minutos;
+        } else {
+            $minutos = $request->minutos;
+        }
+
+        $horaCompleta = $hora . ':' . $minutos;
+
+        // guardar parametros
+        $evento->nombre = $request->nombre;
+        $evento->fecha = $request->fecha;
+        $evento->hora = $horaCompleta;
+        $evento->descripcion = $request->descripcion;
+        $evento->ciudad = $request->ciudad;
+        $evento->direccion = $request->direccion;
+        $evento->estado = $request->estado;
+        $evento->aforo = $request->aforoMax;
+        $evento->tipo = $request->tipo;
+        $evento->entradas_persona = $request->entradasPersona;
+        $evento->categoria_id = $request->categoria;
+        $evento->save();
+
+        // volver a la vista de eventos
+        return redirect()->route('dashboard');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Evento $evento)
+    public function destroy($id)
     {
-        //
+
+        $evento = Evento::find($id);
+
+        if (Auth::user()->rol != 'Admin') {
+            if (Auth::user()->id != $evento->user_id) {
+                return redirect()->route('dashboard');
+            }
+        }
+
+        Evento::destroy($id);
+
+        return redirect()->route('dashboard');
     }
 }

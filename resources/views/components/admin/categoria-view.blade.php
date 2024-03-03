@@ -33,6 +33,7 @@
             </x-table.td>
         </tr>
         @endforeach
+        {{$categorias->links()}}
         @endif
 
     </x-table.skeleton>

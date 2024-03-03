@@ -5,7 +5,7 @@
         </h2>
 
         <!-- EL USUARIO Y EL ESTADO SE HACEN EN EL CONTROLADOR USUARIO AUTH Y ESTADO ACTIVO POR DEFECTO -->
-        <form action="" method="get" enctype="multipart/form-data">
+        <form action="{{route('evento.guardar')}}" method="post" enctype="multipart/form-data">
             @csrf
             <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
                 <!-- Nombre -->
@@ -173,9 +173,11 @@
                     <x-slot name="name">
                         categoria
                     </x-slot>
-
-                    <option value="">-- Categoría --</option>
-                    <option value="comida">Comida</option>
+                    @if($categorias)
+                    @foreach($categorias as $categoria)
+                    <option value="{{$categoria->id}}">{{$categoria->nombre}}</option>
+                    @endforeach
+                    @endif
                 </x-input.admin-select>
 
                 <!-- Imagen -->

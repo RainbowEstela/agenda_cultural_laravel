@@ -8,6 +8,7 @@ use App\Http\Controllers\InscriptionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Models\Empresa;
+use App\Models\Evento;
 use App\Models\Experiencia;
 use Illuminate\Support\Facades\Route;
 
@@ -56,40 +57,22 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
     Route::prefix('eventos')->middleware(['mdrol:Admin|CreadorEventos'])->group(function () {
         Route::get('/view', [EventoController::class, 'index'])->name('dashboard');
 
-        Route::get('/create', function () { // TO DO
-            return view('components.admin.evento-form-crear');
-        })->name('evento.crear');
+        Route::get('/create', [EventoController::class, 'create'])->name('evento.crear');
 
-        Route::post('/store', function () { // TO DO
-            return view('dashboard');
-        })->name('evento.guardar');
+        Route::post('/store', [EventoController::class, 'store'])->name('evento.guardar');
 
-        Route::get('/edit', function () { // TO DO
-            return view('dashboard');
-        })->name('evento.editar');
+        Route::get('/edit/{id}', [EventoController::class, 'edit'])->name('evento.editar');
 
-        Route::post('/update', function () { // TO DO
-            return view('dashboard');
-        })->name('evento.modificar');
+        Route::post('/update', [EventoController::class, 'update'])->name('evento.modificar');
 
-        Route::get('/delete/{id}', function () { // TO DO
-            return view('dashboard');
-        })->name('evento.borrar');
-
-        Route::get('/cancelar/{id}', function () { // TO DO
-            return view('dashboard');
-        })->name('evento.cancelar');
+        Route::get('/delete/{id}', [EventoController::class, 'destroy'])->name('evento.borrar');
     });
 
     // Rutas de inscripciones
     Route::prefix('incripciones')->middleware(['mdrol:Admin|CreadorEventos'])->group(function () {
-        Route::get('/evento/{id}', function () { // TO DO
-            return view('dashboard');
-        })->name('incripcion.view');
+        Route::get('/evento/{id}', [InscriptionController::class, 'index'])->name('incripcion.view');
 
-        Route::get('/cancelar/{id}', function () { // TO DO
-            return view('dashboard');
-        })->name('incripcion.cancelar');
+        Route::get('/cancelar/{id}', [InscriptionController::class, 'cancelar'])->name('incripcion.cancelar');
     });
 
     // Rutas de experiencias
