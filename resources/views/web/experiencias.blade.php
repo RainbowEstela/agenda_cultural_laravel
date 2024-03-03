@@ -66,6 +66,15 @@
                     </x-slot>
                     {{$experiencia->precio}}€
                 </x-text.p-card>
+                <x-text.p-card>
+                    <x-slot name="dato">
+                        Categoria
+                    </x-slot>
+                    @if(isset($experiencia->categoria->nombre))
+                    {{$experiencia->categoria->nombre}}
+                    @endif
+                </x-text.p-card>
+
 
                 <x-slot name="ruta">
                     {{route('experiencias.detalle',['id' => $experiencia->id])}}

@@ -1,10 +1,14 @@
 <?php
 
+use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\EventoController;
 use App\Http\Controllers\ExperienciaController;
 use App\Http\Controllers\InscriptionController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserController;
+use App\Models\Empresa;
+use App\Models\Experiencia;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -93,78 +97,48 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
     Route::prefix('experiencias')->middleware(['mdrol:Admin'])->group(function () {
         Route::get('/view', [ExperienciaController::class, 'index'])->name('experiencia.view');
 
-        Route::get('/create', function () { // TO DO
-            return view('components.admin.experiencia-form-crear');
-        })->name('experiencia.crear');
+        Route::get('/create', [ExperienciaController::class, 'create'])->name('experiencia.crear');
 
-        Route::post('/store', function () { // TO DO
-            return view('dashboard');
-        })->name('experiencia.guardar');
+        Route::post('/store', [ExperienciaController::class, 'store'])->name('experiencia.guardar');
 
-        Route::get('/delete/{id}', function () { // TO DO
-            return view('dashboard');
-        })->name('experiencia.borrar');
-
-        Route::get('/empresa/{empresa}/asignar/{id}', function () { // TO DO
-            return view('dashboard');
-        })->name('experiencia.asignar');
-        Route::get('/empresa/{empresa}/quitar/{id}', function () { // TO DO
-            return view('dashboard');
-        })->name('experiencia.quitar');
+        Route::get('/delete/{id}', [ExperienciaController::class, 'destroy'])->name('experiencia.borrar');
     });
 
     // Rutas de usuarios
     Route::prefix('usuarios')->middleware(['mdrol:Admin'])->group(function () {
-        Route::get('/view', function () { // TO DO
-            return view('components.admin.usuario-view');
-        })->name('usuario.view');
+        Route::get('/view', [UserController::class, 'index'])->name('usuario.view');
 
-        Route::get('/delete/{id}', function () { // TO DO
-            return view('dashboard');
-        })->name('usuario.borrar');
+        Route::get('/delete/{id}', [UserController::class, 'destroy'])->name('usuario.borrar');
     });
 
     // Rutas de categorias
     Route::prefix('categorias')->middleware(['mdrol:Admin'])->group(function () {
-        Route::get('/view', function () { // TO DO
-            return view('components.admin.categoria-view');
-        })->name('categoria.view');
+        Route::get('/view', [CategoriaController::class, 'index'])->name('categoria.view');
 
-        Route::get('/create', function () { // TO DO
-            return view('components.admin.categoria-form-crear');
-        })->name('categoria.crear');
+        Route::get('/create', [CategoriaController::class, 'create'])->name('categoria.crear');
 
-        Route::post('/store', function () { // TO DO
-            return view('dashboard');
-        })->name('categoria.guardar');
+        Route::post('/store', [CategoriaController::class, 'store'])->name('categoria.guardar');
 
-        Route::get('/delete/{id}', function () { // TO DO
-            return view('dashboard');
-        })->name('categoria.borrar');
+        Route::get('/delete/{id}', [CategoriaController::class, 'destroy'])->name('categoria.borrar');
     });
 
     // Rutas de empresa
     Route::prefix('empresas')->middleware(['mdrol:Admin'])->group(function () {
         Route::get('/view', [EmpresaController::class, 'index'])->name('empresa.view');
 
-        Route::get('/create', function () { // TO DO
-            return view('components.admin.empresa-form-crear');
-        })->name('empresa.crear');
+        Route::get('/create', [EmpresaController::class, 'create'])->name('empresa.crear');
 
-        Route::post('/store', function () { // TO DO
-            return view('dashboard');
-        })->name('empresa.guardar');
+        Route::post('/store', [EmpresaController::class, 'store'])->name('empresa.guardar');
 
-        Route::get('/delete/{id}', function () { // TO DO
-            return view('dashboard');
-        })->name('empresa.borrar');
+        Route::get('/delete/{id}', [EmpresaController::class, 'destroy'])->name('empresa.borrar');
     });
 });
 
+/*
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-
+*/
 require __DIR__ . '/auth.php';

@@ -5,7 +5,7 @@
         </h2>
 
         <!-- EL USUARIO Y EL ESTADO SE HACEN EN EL CONTROLADOR USUARIO AUTH Y ESTADO ACTIVO POR DEFECTO -->
-        <form action="" method="get">
+        <form action="{{route('categoria.guardar')}}" method="post">
             @csrf
             <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
                 <!-- Nombre -->

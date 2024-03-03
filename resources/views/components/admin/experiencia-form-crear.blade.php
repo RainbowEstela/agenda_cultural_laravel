@@ -4,8 +4,7 @@
             Añadir experiencia
         </h2>
 
-        <!-- EL USUARIO Y EL ESTADO SE HACEN EN EL CONTROLADOR USUARIO AUTH Y ESTADO ACTIVO POR DEFECTO -->
-        <form action="" method="get" enctype="multipart/form-data">
+        <form action="{{route('experiencia.guardar')}}" method="post" enctype="multipart/form-data">
             @csrf
             <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
                 <!-- Nombre -->
@@ -107,7 +106,7 @@
                             Link
                         </x-slot>
                         <x-slot name="name">
-                            Link
+                            link
                         </x-slot>
                         <x-slot name="placeholder">
                             https://su-dominio.com/experiencia
@@ -121,11 +120,29 @@
                         Empresa
                     </x-slot>
                     <x-slot name="name">
-                        Empresa
+                        empresa
                     </x-slot>
 
-                    <option value="">-- Empresa --</option>
-                    <option value="1">Empresa</option>
+                    @if(isset($empresas))
+                    @foreach($empresas as $empresa)
+                    <option value="{{$empresa->id}}">{{$empresa->nombre}}</option>
+                    @endforeach
+                    @endif
+                </x-input.admin-select>
+
+                <!-- categoria -->
+                <x-input.admin-select>
+                    <x-slot name="dato">
+                        Categoría
+                    </x-slot>
+                    <x-slot name="name">
+                        categoria
+                    </x-slot>
+                    @if(isset($categorias))
+                    @foreach($categorias as $categoria)
+                    <option value="{{$categoria->id}}">{{$categoria->nombre}}</option>
+                    @endforeach
+                    @endif
                 </x-input.admin-select>
 
                 <!-- Imagen -->

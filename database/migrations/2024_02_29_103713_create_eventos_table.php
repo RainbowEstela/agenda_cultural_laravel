@@ -23,11 +23,11 @@ return new class extends Migration
             $table->integer('aforo');
             $table->string('tipo');
             $table->integer('entradas_persona');
-            $table->string('imagen');
+            $table->string('imagen')->nullable();
             $table->unsignedBigInteger("categoria_id")->nullable();
-            $table->foreign("categoria_id")->references('id')->on('categorias')->onDelete('set null');
+            $table->foreign("categoria_id")->references('id')->on('categorias')->onUpdate('cascade')->onDelete('set null');
             $table->unsignedBigInteger("user_id")->nullable();
-            $table->foreign("user_id")->references('id')->on('users')->onDelete('set null');
+            $table->foreign("user_id")->references('id')->on('users')->onUpdate('cascade')->onDelete('set null');
             $table->timestamps();
         });
     }

@@ -14,4 +14,9 @@ class Empresa extends Model
     {
         return $this->hasMany(Experiencia::class);
     }
+
+    public function usuarios(): HasMany
+    {
+        return $this->hasMany(Empresa::class);
+    }
 }

@@ -19,12 +19,14 @@
             <p>
                 {{$experiencia->descripcion_larga}}
             </p>
+            @if(isset($experiencia->empresa->informacion_extra))
             <x-text.h3>
                 Información de la empresa
             </x-text.h3>
             <p>
                 {{$experiencia->empresa->informacion_extra}}
             </p>
+            @endif
             <br>
         </x-slot>
         <x-text.detail-border>
@@ -32,7 +34,9 @@
                 Categoria
             </x-slot>
             <x-slot name="valor">
+                @if(isset($experiencia->categoria->nombre))
                 {{$experiencia->categoria->nombre}}
+                @endif
             </x-slot>
         </x-text.detail-border>
         <x-slot name="precio">

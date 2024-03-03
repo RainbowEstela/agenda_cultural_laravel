@@ -54,7 +54,11 @@
             <x-table.td>{{$evento->aforo}}</x-table.td>
             <x-table.td>{{$evento->tipo}}</x-table.td>
             <x-table.td>{{$evento->entradas_persona}}</x-table.td>
-            <x-table.td>{{$evento->categoria->nombre}}</x-table.td>
+            <x-table.td>
+                @if(isset($evento->categoria->nombre))
+                {{$evento->categoria->nombre}}
+                @endif
+            </x-table.td>
             <x-table.td>
                 <p>
                     <x-link.purple>
@@ -68,7 +72,11 @@
                     </x-link.purple>
                 </p>
             </x-table.td>
-            <x-table.td>{{$evento->user->email}}</x-table.td>
+            <x-table.td>
+                @if(isset($evento->user->email))
+                {{$evento->user->email}}
+                @endif
+            </x-table.td>
             <x-table.td>
                 <div class="flex items-center space-x-4 text-sm">
                     <button class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray" aria-label="Edit">

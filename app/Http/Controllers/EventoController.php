@@ -22,7 +22,7 @@ class EventoController extends Controller
     // indice de la agenda web
     public function indexWeb()
     {
-        $eventos = Evento::where('estado', 'creado')->where('fecha', '>=', now())->paginate(8);
+        $eventos = Evento::Where('categoria_id', '!=', null)->where('estado', 'creado')->where('fecha', '>=', now())->paginate(8);
         $categorias = Categoria::All();
         return view('web.agenda', ['eventos' => $eventos, 'categorias' => $categorias]);
     }
@@ -30,7 +30,7 @@ class EventoController extends Controller
     // inidice de los primeros eventos para la home web
     public function indexFirst()
     {
-        $eventos = Evento::where('estado', 'creado')->where('fecha', '>=', now())->orderBy('fecha', 'asc')->limit(4)->get();
+        $eventos = Evento::Where('categoria_id', '!=', null)->where('estado', 'creado')->where('fecha', '>=', now())->orderBy('fecha', 'asc')->limit(4)->get();
         return view('welcome', ['eventos' => $eventos]);
     }
 

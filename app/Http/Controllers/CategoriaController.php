@@ -12,7 +12,9 @@ class CategoriaController extends Controller
      */
     public function index()
     {
-        //
+        $categorias = Categoria::OrderBy('nombre', 'asc')->paginate(10);
+
+        return view('components.admin.categoria-view', ['categorias' => $categorias]);
     }
 
     /**
@@ -20,7 +22,7 @@ class CategoriaController extends Controller
      */
     public function create()
     {
-        //
+        return view('components.admin.categoria-form-crear');
     }
 
     /**
@@ -28,7 +30,15 @@ class CategoriaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nombre' => ['required', 'string', 'max:255'],
+        ]);
+
+        $categoria = new Categoria();
+        $categoria->nombre = $request->nombre;
+        $categoria->save();
+
+        return redirect()->route('categoria.view');
     }
 
     /**
@@ -58,8 +68,10 @@ class CategoriaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Categoria $categoria)
+    public function destroy($id)
     {
-        //
+        Categoria::destroy($id);
+
+        return redirect()->route('categoria.view');
     }
 }

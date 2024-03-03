@@ -31,7 +31,9 @@
                     <x-slot name="dato">
                         Categoría
                     </x-slot>
+                    @if(isset($evento->categoria->nombre))
                     {{$evento->categoria->nombre}}
+                    @endif
                 </x-text.p-card>
 
                 <x-text.p-card>

@@ -54,7 +54,9 @@
                 Categoria
             </x-slot>
             <x-slot name="valor">
-                {{$evento->categoria->nombre}}
+                @if(isset($experiencia->categoria->nombre))
+                {{$experiencia->categoria->nombre}}
+                @endif
             </x-slot>
         </x-text.detail-border>
 

@@ -22,7 +22,7 @@ class EmpresaController extends Controller
      */
     public function create()
     {
-        //
+        return view('components.admin.empresa-form-crear');
     }
 
     /**
@@ -30,7 +30,25 @@ class EmpresaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nombre' => ['required', 'string', 'max:255'],
+            'direccion' => ['required', 'string', 'max:255'],
+            'telefono' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'max:255'],
+            'web' => ['required', 'string', 'max:255'],
+            'informacionExtra' => ['required', 'string', 'max:400'],
+        ]);
+
+        $empresa = new Empresa();
+        $empresa->nombre = $request->nombre;
+        $empresa->direccion = $request->direccion;
+        $empresa->telefono = $request->telefono;
+        $empresa->email = $request->email;
+        $empresa->web = $request->web;
+        $empresa->informacion_extra = $request->informacionExtra;
+        $empresa->save();
+
+        return redirect()->route('empresa.view');
     }
 
     /**
@@ -60,8 +78,10 @@ class EmpresaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Empresa $empresa)
+    public function destroy($id)
     {
-        //
+        Empresa::destroy($id);
+
+        return redirect()->route('empresa.view');
     }
 }
