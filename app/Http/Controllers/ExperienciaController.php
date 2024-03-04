@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Categoria;
 use App\Models\Empresa;
 use App\Models\Experiencia;
+use DateTime;
 use Illuminate\Http\Request;
 
 class ExperienciaController extends Controller
@@ -22,7 +23,7 @@ class ExperienciaController extends Controller
     // muestra la experiencias en la web
     public function indexWeb()
     {
-        $experiencias = Experiencia::Where('categoria_id', '!=', null)->where('fecha', '>=', now())->paginate(8);
+        $experiencias = Experiencia::Where('categoria_id', '!=', null)->where('fecha', '>=', now())->orderBy('fecha', 'asc')->paginate(8);
         $categorias = Categoria::All();
 
         return view('web.experiencias', ['experiencias' => $experiencias, 'categorias' => $categorias]);
@@ -109,5 +110,54 @@ class ExperienciaController extends Controller
         Experiencia::destroy($id);
 
         return redirect()->route('experiencia.view');
+    }
+
+    // recoge los datos y pasa la fecha deseada de palabras a un date
+    public function filtrar(Request $request)
+    {
+        $hoy = date('Y-m-d');
+        $fechaBuscar = null;
+        $categoria = $request->categoria;
+
+        if ($request->fecha == 'semana') {
+            $domingoSig = new DateTime($hoy);
+            $domingoSig->modify('next Sunday');
+
+            $fechaBuscar = $domingoSig->format('Y-m-d');
+        } elseif ($request->fecha == 'mes') {
+            $ultimoDiaMes = new DateTime($hoy);
+            $ultimoDiaMes->modify('last day of this month');
+
+            $fechaBuscar = $ultimoDiaMes->format('Y-m-d');
+        } else {
+            $fechaBuscar = 'all';
+        }
+
+        if (!$request->categoria) {
+            $categoria = 'all';
+        }
+
+
+        return redirect()->route('eventos.filtrado', ['categoria' => $categoria, 'fecha' => $fechaBuscar]);
+    }
+
+    // busca en la base da datos los eventos por categoria y fecha
+    public function filtrado($categoria, $fecha)
+    {
+        $eventos = null;
+
+        if ($categoria == 'all' && $fecha == 'all') {
+            $eventos = Experiencia::Where('categoria_id', '!=', null)->where('fecha', '>=', now())->orderBy('fecha', 'asc')->paginate(8);
+        } elseif ($categoria != 'all' && $fecha == 'all') {
+            $eventos = Experiencia::Where('categoria_id', '=', $categoria)->where('fecha', '>=', now())->orderBy('fecha', 'asc')->paginate(8);
+        } elseif ($categoria == 'all' && $fecha != 'all') {
+            $eventos = Experiencia::Where('categoria_id', '!=', null)->where('fecha', '>=', now())->where('fecha', '<=', $fecha)->orderBy('fecha', 'asc')->paginate(8);
+        } else {
+            $eventos = Experiencia::Where('categoria_id', '=', $categoria)->where('fecha', '>=', now())->where('fecha', '<=', $fecha)->orderBy('fecha', 'asc')->paginate(8);
+        }
+
+        $categorias = Categoria::All();
+
+        return view('web.agenda', ['eventos' => $eventos, 'categorias' => $categorias]);
     }
 }

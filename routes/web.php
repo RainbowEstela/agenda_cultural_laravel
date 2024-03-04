@@ -39,6 +39,12 @@ Route::prefix("web")->group(function () {
     // vista de experiencias detalle
     Route::get('/experiencias/{id}', [ExperienciaController::class, 'show'])->name("experiencias.detalle");
 
+    // request de filtro
+    Route::post('/filtrar-experiencia', [ExperienciaController::class, 'filtrar'])->name('experiencias.filtrar');
+
+    // respuesta del filtro
+    Route::get('/filtro-experiencia/{categoria}/fecha/{fecha}', [ExperienciaController::class, 'filtrado'])->name('experiencias.filtrado');
+
 
     // vista de eventos
     Route::get('/eventos', [EventoController::class, 'indexWeb'])->name("eventos");
@@ -48,6 +54,12 @@ Route::prefix("web")->group(function () {
 
     // incribirse a un evento
     Route::post('/eventos', [InscriptionController::class, 'inscribirse'])->name("eventos.incribirse")->middleware(['auth', 'verified', 'mdrol:Asistente']);
+
+    // request de filtro
+    Route::post('/filtrar', [EventoController::class, 'filtrar'])->name('eventos.filtrar');
+
+    // respuesta del filtro
+    Route::get('/filtro/{categoria}/fecha/{fecha}', [EventoController::class, 'filtrado'])->name('eventos.filtrado');
 });
 
 // Paginas Admin

@@ -50,6 +50,12 @@
                                 {{ __('Log Out') }}
                             </x-dropdown-link>
                         </form>
+
+                        @if(Auth::user()->rol == 'Admin' || Auth::user()->rol == 'CreadorEventos')
+                        <x-dropdown-link :href="route('dashboard')">
+                            {{ __('Panel Admin') }}
+                        </x-dropdown-link>
+                        @endif
                     </x-slot>
                 </x-dropdown>
             </div>
@@ -88,7 +94,13 @@
                                                 this.closest('form').submit();">
                                 {{ __('Log Out') }}
                             </x-dropdown-link>
+
                         </form>
+                        @if(Auth::user()->rol == 'Admin' || Auth::user()->rol == 'CreadorEventos')
+                        <x-dropdown-link :href="route('dashboard')">
+                            {{ __('Panel Admin') }}
+                        </x-dropdown-link>
+                        @endif
                     </x-slot>
                 </x-dropdown>
             </div>

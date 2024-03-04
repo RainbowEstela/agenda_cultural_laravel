@@ -4,17 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Models\Categoria;
 use App\Models\Evento;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class EventoController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Muesta los eventos en el panel admin
      */
     public function index()
     {
-        $eventos = Evento::paginate(10);
+        $eventos = Evento::paginate(5);
 
         return view('dashboard', ['eventos' => $eventos]);
     }
@@ -22,7 +23,7 @@ class EventoController extends Controller
     // indice de la agenda web
     public function indexWeb()
     {
-        $eventos = Evento::Where('categoria_id', '!=', null)->where('estado', 'creado')->where('fecha', '>=', now())->paginate(8);
+        $eventos = Evento::Where('categoria_id', '!=', null)->where('estado', 'creado')->where('fecha', '>=', now())->orderBy('fecha', 'asc')->paginate(8);
         $categorias = Categoria::All();
         return view('web.agenda', ['eventos' => $eventos, 'categorias' => $categorias]);
     }
@@ -242,5 +243,55 @@ class EventoController extends Controller
         Evento::destroy($id);
 
         return redirect()->route('dashboard');
+    }
+
+
+    // recoge los datos y pasa la fecha deseada de palabras a un date
+    public function filtrar(Request $request)
+    {
+        $hoy = date('Y-m-d');
+        $fechaBuscar = null;
+        $categoria = $request->categoria;
+
+        if ($request->fecha == 'semana') {
+            $domingoSig = new DateTime($hoy);
+            $domingoSig->modify('next Sunday');
+
+            $fechaBuscar = $domingoSig->format('Y-m-d');
+        } elseif ($request->fecha == 'mes') {
+            $ultimoDiaMes = new DateTime($hoy);
+            $ultimoDiaMes->modify('last day of this month');
+
+            $fechaBuscar = $ultimoDiaMes->format('Y-m-d');
+        } else {
+            $fechaBuscar = 'all';
+        }
+
+        if (!$request->categoria) {
+            $categoria = 'all';
+        }
+
+
+        return redirect()->route('eventos.filtrado', ['categoria' => $categoria, 'fecha' => $fechaBuscar]);
+    }
+
+    // busca en la base da datos los eventos por categoria y fecha
+    public function filtrado($categoria, $fecha)
+    {
+        $eventos = null;
+
+        if ($categoria == 'all' && $fecha == 'all') {
+            $eventos = Evento::Where('categoria_id', '!=', null)->where('estado', 'creado')->where('fecha', '>=', now())->orderBy('fecha', 'asc')->paginate(8);
+        } elseif ($categoria != 'all' && $fecha == 'all') {
+            $eventos = Evento::Where('categoria_id', '=', $categoria)->where('estado', 'creado')->where('fecha', '>=', now())->orderBy('fecha', 'asc')->paginate(8);
+        } elseif ($categoria == 'all' && $fecha != 'all') {
+            $eventos = Evento::Where('categoria_id', '!=', null)->where('estado', 'creado')->where('fecha', '>=', now())->where('fecha', '<=', $fecha)->orderBy('fecha', 'asc')->paginate(8);
+        } else {
+            $eventos = Evento::Where('categoria_id', '=', $categoria)->where('estado', 'creado')->where('fecha', '>=', now())->where('fecha', '<=', $fecha)->orderBy('fecha', 'asc')->paginate(8);
+        }
+
+        $categorias = Categoria::All();
+
+        return view('web.agenda', ['eventos' => $eventos, 'categorias' => $categorias]);
     }
 }

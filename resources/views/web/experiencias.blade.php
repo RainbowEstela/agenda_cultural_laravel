@@ -1,6 +1,6 @@
 <x-app-web>
     <x-div.principal>
-        <form action="">
+        <form action="{{route('experiencias.filtrar')}}" method="post">
             @csrf
             <x-div.grid-uno>
                 <x-input.select-blue>

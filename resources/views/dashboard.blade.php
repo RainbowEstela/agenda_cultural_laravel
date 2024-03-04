@@ -19,6 +19,7 @@
             <x-table.th>Ciudad</x-table.th>
             <x-table.th>Direccion</x-table.th>
             <x-table.th>Estado</x-table.th>
+            <x-table.th>Inscripciones</x-table.th>
             <x-table.th>Aforo</x-table.th>
             <x-table.th>Tipo</x-table.th>
             <x-table.th>Entradas por persona</x-table.th>
@@ -50,6 +51,19 @@
                 @else
                 error cargando estado
                 @endif
+            </x-table.td>
+            <x-table.td>
+                <p>
+                    <x-link.purple>
+                        <x-slot name="target">
+                            _self
+                        </x-slot>
+                        <x-slot name="href">
+                            {{route('incripcion.view',['id' => $evento->id])}}
+                        </x-slot>
+                        Ver
+                    </x-link.purple>
+                </p>
             </x-table.td>
             <x-table.td>{{$evento->aforo}}</x-table.td>
             <x-table.td>{{$evento->tipo}}</x-table.td>
