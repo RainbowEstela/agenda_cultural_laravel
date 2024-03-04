@@ -2,6 +2,9 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Categoria;
+use App\Models\Empresa;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -14,6 +17,12 @@ class ExperienciaResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $imagen = null;
+
+        if ($this->imagen) {
+            $imagen = asset('/storage/experiencias/' . $this->imagen);
+        }
+
         return [
             'id' => $this->id,
             'nombre' => $this->nombre,
@@ -23,9 +32,9 @@ class ExperienciaResource extends JsonResource
             'descripcion_larga' => $this->descripcion_larga,
             'precio' => $this->precio,
             'link' => $this->link,
-            'imagen' => $this->imagen,
-            "categoria_id" => $this->categoria_id,
-            "empresa_id" => $this->empresa_id
+            'imagen' => $imagen,
+            "categoria_id" => new CategoriaResource(Categoria::where('id', intval($this->categoria_id))->first()),
+            "empresa_id" => new EmpresaResource(Empresa::where('id', intval($this->empresa_id))->first()),
         ];
     }
 }
